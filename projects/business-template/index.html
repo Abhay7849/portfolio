@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ApexGrowth - Enterprise digital solutions, custom web applications, and growth consulting." />
+  <title>ApexGrowth | Modern Agency &amp; Business Template</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-box">
+      <a href="#" class="brand">Apex<span>Growth</span></a>
+
+      <nav class="nav-links" id="nav-links">
+        <a href="#services">Services</a>
+        <a href="#solutions">Why Us</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact" class="btn btn-outline nav-btn">Schedule Call</a>
+      </nav>
+
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-left">
+        <div class="pill-badge">🚀 Next-Gen Digital Agency</div>
+        <h1 class="hero-title">Scale Your Digital Presence With Precision</h1>
+        <p class="hero-desc">We build enterprise-grade websites, high-converting digital products, and streamlined automation systems that drive predictable revenue growth.</p>
+        <div class="hero-ctas">
+          <a href="#contact" class="btn btn-primary">Book Free Consultation</a>
+          <a href="#pricing" class="btn btn-secondary">Explore Plans</a>
+        </div>
+
+        <div class="trust-bar">
+          <div class="trust-stat">
+            <strong>$24M+</strong>
+            <span>Client Revenue</span>
+          </div>
+          <div class="trust-stat">
+            <strong>150+</strong>
+            <span>Projects Delivered</span>
+          </div>
+          <div class="trust-stat">
+            <strong>99.4%</strong>
+            <span>Client Satisfaction</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="dashboard-mockup">
+          <div class="mockup-header">
+            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            <span class="mockup-title">Performance Analytics Dashboard</span>
+          </div>
+          <div class="mockup-content">
+            <div class="mockup-metric">
+              <div>
+                <span class="metric-title">Monthly Organic Traffic</span>
+                <h3>148,290 <span class="growth">+34.2%</span></h3>
+              </div>
+              <div class="metric-graph-bars">
+                <div class="bar h40"></div>
+                <div class="bar h60"></div>
+                <div class="bar h50"></div>
+                <div class="bar h80"></div>
+                <div class="bar h100"></div>
+              </div>
+            </div>
+            <div class="mockup-cards">
+              <div class="mockup-card">
+                <span>Avg. Page Speed</span>
+                <strong>0.84s</strong>
+              </div>
+              <div class="mockup-card">
+                <span>Conversion Rate</span>
+                <strong>4.82%</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services section" id="services">
+    <div class="container">
+      <div class="section-top">
+        <span class="tag">What We Do</span>
+        <h2 class="title">Engineered For Performance &amp; Scalability</h2>
+        <p class="sub">Tailored technical solutions designed to give your company an unfair market advantage</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-box">
+          <div class="icon">💻</div>
+          <h3>Custom Web Applications</h3>
+          <p>Clean, maintainable, responsive websites engineered with fast load times and clean semantic markup.</p>
+          <ul class="feat-list">
+            <li>✓ Responsive on 100% of devices</li>
+            <li>✓ Lighthouse score of 95+</li>
+          </ul>
+        </div>
+
+        <div class="service-box">
+          <div class="icon">📈</div>
+          <h3>Conversion Rate Optimization</h3>
+          <p>Data-backed UX designs and layout revisions strategically built to convert site visitors into paying leads.</p>
+          <ul class="feat-list">
+            <li>✓ Frictionless user journey</li>
+            <li>✓ A/B testable landing structures</li>
+          </ul>
+        </div>
+
+        <div class="service-box">
+          <div class="icon">⚡</div>
+          <h3>Speed &amp; SEO Performance</h3>
+          <p>Technical search engine optimization, image compression, script minimization, and Core Web Vitals fixes.</p>
+          <ul class="feat-list">
+            <li>✓ Sub-second load times</li>
+            <li>✓ Structured schema markup</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Pricing Section -->
+  <section class="pricing section" id="pricing">
+    <div class="container">
+      <div class="section-top">
+        <span class="tag">Transparent Tiers</span>
+        <h2 class="title">Simple, Value-Driven Investment</h2>
+        <p class="sub">No surprise fees. Choose the tier that matches your business growth goals.</p>
+
+        <!-- Billing Toggle -->
+        <div class="billing-toggle">
+          <span class="billing-lbl active" id="monthly-lbl">Monthly</span>
+          <label class="switch">
+            <input type="checkbox" id="pricing-toggle" />
+            <span class="slider"></span>
+          </label>
+          <span class="billing-lbl" id="annual-lbl">Annual <span class="discount-pill">Save 20%</span></span>
+        </div>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Tier 1 -->
+        <div class="price-card">
+          <span class="tier-name">Starter Launch</span>
+          <div class="price-val">
+            <span class="currency">$</span><span class="amount" data-monthly="499" data-annual="399">499</span><span class="period">/mo</span>
+          </div>
+          <p class="tier-desc">Ideal for early-stage startups and small businesses launching their web presence.</p>
+          <ul class="tier-features">
+            <li>✓ 1 Responsive Landing Page</li>
+            <li>✓ Mobile-First Optimization</li>
+            <li>✓ Lead Capture Form Setup</li>
+            <li>✓ 1 Round of Revisions</li>
+          </ul>
+          <a href="#contact" class="btn btn-outline full-width">Get Started</a>
+        </div>
+
+        <!-- Tier 2 -->
+        <div class="price-card featured">
+          <div class="popular-badge">Most Popular</div>
+          <span class="tier-name">Growth Business</span>
+          <div class="price-val">
+            <span class="currency">$</span><span class="amount" data-monthly="999" data-annual="799">999</span><span class="period">/mo</span>
+          </div>
+          <p class="tier-desc">Designed for scaling companies needing custom multi-page sites and SEO architecture.</p>
+          <ul class="tier-features">
+            <li>✓ Up to 5 Custom Pages</li>
+            <li>✓ Full SEO &amp; Speed Tuning</li>
+            <li>✓ Analytics &amp; Tracking Setup</li>
+            <li>✓ Priority Email &amp; Chat Support</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary full-width">Select Growth</a>
+        </div>
+
+        <!-- Tier 3 -->
+        <div class="price-card">
+          <span class="tier-name">Enterprise Custom</span>
+          <div class="price-val">
+            <span class="currency">$</span><span class="amount" data-monthly="1999" data-annual="1599">1999</span><span class="period">/mo</span>
+          </div>
+          <p class="tier-desc">Full-service digital transformation, custom integrations, and dedicated consulting.</p>
+          <ul class="tier-features">
+            <li>✓ Unlimited Custom Pages</li>
+            <li>✓ Complex API / CRM Integrations</li>
+            <li>✓ Bi-Weekly Strategy Sprints</li>
+            <li>✓ Dedicated Technical Lead</li>
+          </ul>
+          <a href="#contact" class="btn btn-outline full-width">Contact Enterprise</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive FAQ Accordion -->
+  <section class="faq section" id="faq">
+    <div class="container max-w-md">
+      <div class="section-top">
+        <span class="tag">Got Questions?</span>
+        <h2 class="title">Frequently Asked Questions</h2>
+      </div>
+
+      <div class="accordion">
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How fast can you launch my new website?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Single-page landing pages typically launch in 3 to 5 business days. Full multi-page business websites take roughly 1 to 2 weeks depending on custom content and assets.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Will my website be mobile-friendly?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>100% yes. We follow strict mobile-first design principles. We test across iPhones, iPads, Android devices, and 4K displays to guarantee perfect responsiveness.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Do you provide maintenance and updates after launch?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes, we provide 30 days of complimentary support after launch for any bug fixes. Ongoing monthly retainer plans are also available for continuous feature updates.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Lead Form -->
+  <section class="contact-lead section" id="contact">
+    <div class="container max-w-md">
+      <div class="lead-box">
+        <div class="section-top">
+          <span class="tag">Start Today</span>
+          <h2 class="title">Schedule Your Free Discovery Call</h2>
+          <p class="sub">Fill out the details below and our team will get back to you within 4 hours.</p>
+        </div>
+
+        <form class="lead-form" id="lead-form" onsubmit="handleLeadSubmit(event)">
+          <div class="form-row">
+            <div class="form-input">
+              <label for="lead-name">Your Full Name</label>
+              <input type="text" id="lead-name" placeholder="Sarah Connor" required />
+            </div>
+            <div class="form-input">
+              <label for="lead-email">Business Email</label>
+              <input type="email" id="lead-email" placeholder="sarah@company.com" required />
+            </div>
+          </div>
+
+          <div class="form-input">
+            <label for="lead-service">Primary Goal</label>
+            <select id="lead-service">
+              <option value="Landing Page Development">Landing Page Development</option>
+              <option value="Full Business Website Redesign">Full Business Website Redesign</option>
+              <option value="Mobile Responsiveness & Speed Fix">Mobile Responsiveness &amp; Speed Fix</option>
+              <option value="Custom Development Consultation">Custom Development Consultation</option>
+            </select>
+          </div>
+
+          <div class="form-input">
+            <label for="lead-budget">Estimated Budget</label>
+            <select id="lead-budget">
+              <option value="$500 - $1,000">$500 - $1,000</option>
+              <option value="$1,000 - $3,000">$1,000 - $3,000</option>
+              <option value="$3,000+">$3,000+</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary full-width">Request Project Proposal</button>
+          <p class="success-msg" id="lead-msg"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-bottom">
+      <p>&copy; 2026 ApexGrowth Agency. Template created by Abhay Singh for freelance clients.</p>
+      <div class="footer-links">
+        <a href="#services">Services</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

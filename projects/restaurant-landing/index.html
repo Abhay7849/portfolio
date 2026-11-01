@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Savoria Bistro & Cafe - Authentic culinary experience, fresh artisanal dishes, and fine dining." />
+  <title>Savoria Bistro &amp; Cafe | Artisanal Dining</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Header / Navigation -->
+  <header class="header" id="header">
+    <div class="container nav-wrapper">
+      <a href="#" class="logo">Savoria<span>.</span></a>
+      
+      <nav class="nav" id="nav">
+        <ul class="nav-links">
+          <li><a href="#home" class="nav-link">Home</a></li>
+          <li><a href="#about" class="nav-link">Our Story</a></li>
+          <li><a href="#menu" class="nav-link">Menu</a></li>
+          <li><a href="#testimonials" class="nav-link">Reviews</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#reservation" class="btn btn-gold">Book a Table</a>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <span class="badge">Fine Dining &amp; Artisanal Coffee</span>
+      <h1 class="hero-title">Experience the Art of Authentic Flavors</h1>
+      <p class="hero-sub">Handcrafted organic ingredients, masterfully plated by world-class chefs. Indulge your senses in every bite.</p>
+      <div class="hero-btns">
+        <a href="#menu" class="btn btn-gold">Explore Menu</a>
+        <a href="#reservation" class="btn btn-outline-light">Reserve a Table</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">4.9★</span>
+          <span class="stat-lbl">Google Rating</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">100%</span>
+          <span class="stat-lbl">Fresh Organic</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">15+</span>
+          <span class="stat-lbl">Years Culinary</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About / Story Section -->
+  <section class="about section" id="about">
+    <div class="container about-grid">
+      <div class="about-images">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=700&q=80" alt="Restaurant Interior" class="img-main" />
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80" alt="Gourmet Dish" class="img-sub" />
+      </div>
+      <div class="about-text">
+        <span class="section-tag">Our Culinary Heritage</span>
+        <h2 class="section-title">Passion On Every Plate, Warmth In Every Visit</h2>
+        <p>Founded in 2012, Savoria began with a single vision: to bring farm-to-table dining to life through seasonal produce, time-honored recipes, and modern culinary precision.</p>
+        <p>From slow-roasted woodfired delights to artisanal pastries and hand-pulled espresso, every dish is an invitation to celebrate good food and great company.</p>
+        <div class="about-features">
+          <div class="feature-item">
+            <span class="feat-icon">🌿</span>
+            <div>
+              <strong>Farm Fresh Ingredients</strong>
+              <p>Directly sourced from trusted local organic growers.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feat-icon">👨‍🍳</span>
+            <div>
+              <strong>Master Culinary Chefs</strong>
+              <p>Curated recipes with balanced flavor and artistic presentation.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu Section with Filters -->
+  <section class="menu section" id="menu">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Culinary Selection</span>
+        <h2 class="section-title">Signature Menu</h2>
+        <p class="section-sub">Explore our seasonal offerings prepared with fresh, locally sourced ingredients</p>
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="menu-tabs">
+        <button class="tab-btn active" data-filter="all">All Dishes</button>
+        <button class="tab-btn" data-filter="mains">Main Courses</button>
+        <button class="tab-btn" data-filter="starters">Starters</button>
+        <button class="tab-btn" data-filter="desserts">Desserts &amp; Coffee</button>
+      </div>
+
+      <!-- Menu Grid -->
+      <div class="menu-grid" id="menu-grid">
+        <!-- Item 1 -->
+        <div class="menu-card" data-category="mains">
+          <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80" alt="Mediterranean Salmon" class="menu-img" />
+          <div class="menu-details">
+            <div class="menu-top">
+              <h3 class="menu-name">Truffle Herb Salmon</h3>
+              <span class="menu-price">$28</span>
+            </div>
+            <p class="menu-desc">Pan-seared Atlantic salmon glazed with black truffle reduction, served over creamy saffron risotto.</p>
+            <span class="menu-badge">Chef's Choice</span>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="menu-card" data-category="starters">
+          <img src="https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&w=600&q=80" alt="Artisan Bruschetta" class="menu-img" />
+          <div class="menu-details">
+            <div class="menu-top">
+              <h3 class="menu-name">Heirloom Bruschetta</h3>
+              <span class="menu-price">$14</span>
+            </div>
+            <p class="menu-desc">Toasted rustic sourdough topped with balsamic roasted heirloom tomatoes, fresh burrata, and basil oil.</p>
+            <span class="menu-badge">Vegetarian</span>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="menu-card" data-category="mains">
+          <img src="https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=600&q=80" alt="Prime Ribeye" class="menu-img" />
+          <div class="menu-details">
+            <div class="menu-top">
+              <h3 class="menu-name">Charred Angus Ribeye</h3>
+              <span class="menu-price">$36</span>
+            </div>
+            <p class="menu-desc">Dry-aged Angus ribeye steak grilled over charcoal with rosemary garlic butter and asparagus.</p>
+            <span class="menu-badge">Gluten-Free</span>
+          </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="menu-card" data-category="starters">
+          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80" alt="Harvest Salad" class="menu-img" />
+          <div class="menu-details">
+            <div class="menu-top">
+              <h3 class="menu-name">Avocado Citrus Salad</h3>
+              <span class="menu-price">$16</span>
+            </div>
+            <p class="menu-desc">Baby arugula, organic Hass avocado, grapefruit segments, candied pecans, and citrus vinaigrette.</p>
+            <span class="menu-badge">Vegan</span>
+          </div>
+        </div>
+
+        <!-- Item 5 -->
+        <div class="menu-card" data-category="desserts">
+          <img src="https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=600&q=80" alt="Molten Lava Cake" class="menu-img" />
+          <div class="menu-details">
+            <div class="menu-top">
+              <h3 class="menu-name">Belgian Molten Cake</h3>
+              <span class="menu-price">$12</span>
+            </div>
+            <p class="menu-desc">Warm 70% dark Belgian chocolate lava cake paired with Madagascar vanilla bean gelato.</p>
+            <span class="menu-badge">Sweet Classic</span>
+          </div>
+        </div>
+
+        <!-- Item 6 -->
+        <div class="menu-card" data-category="desserts">
+          <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80" alt="Artisan Latte" class="menu-img" />
+          <div class="menu-details">
+            <div class="menu-top">
+              <h3 class="menu-name">Golden Honey Latte</h3>
+              <span class="menu-price">$7</span>
+            </div>
+            <p class="menu-desc">Single-origin Ethiopian espresso infused with organic honey, Ceylon cinnamon, and oat milk.</p>
+            <span class="menu-badge">Specialty Coffee</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reservation Section -->
+  <section class="reservation section" id="reservation">
+    <div class="container reservation-box">
+      <div class="reservation-content">
+        <span class="section-tag">Book In Advance</span>
+        <h2 class="section-title">Reserve Your Table</h2>
+        <p>Join us for an unforgettable dining experience. For private events or parties over 8, please call us directly.</p>
+        <div class="contact-quick">
+          <p>📞 <strong>Phone:</strong> +1 (555) 382-9900</p>
+          <p>📍 <strong>Location:</strong> 425 Grand Avenue, Downtown</p>
+          <p>⏰ <strong>Hours:</strong> Tue - Sun: 11:30 AM - 10:30 PM</p>
+        </div>
+      </div>
+
+      <form class="reservation-form" id="res-form" onsubmit="handleReservation(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="res-name">Your Full Name</label>
+            <input type="text" id="res-name" placeholder="John Doe" required />
+          </div>
+          <div class="form-group">
+            <label for="res-phone">Phone Number</label>
+            <input type="tel" id="res-phone" placeholder="+1 (555) 000-0000" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="res-date">Date</label>
+            <input type="date" id="res-date" required />
+          </div>
+          <div class="form-group">
+            <label for="res-time">Time</label>
+            <select id="res-time" required>
+              <option value="12:00 PM">12:00 PM (Lunch)</option>
+              <option value="01:30 PM">01:30 PM (Lunch)</option>
+              <option value="06:30 PM">06:30 PM (Dinner)</option>
+              <option value="07:30 PM">07:30 PM (Dinner)</option>
+              <option value="08:30 PM">08:30 PM (Dinner)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="res-guests">Number of Guests</label>
+          <select id="res-guests">
+            <option value="2 Guests">2 Guests (Table for two)</option>
+            <option value="4 Guests">4 Guests</option>
+            <option value="6 Guests">6 Guests</option>
+            <option value="8+ Guests">8+ Guests (Celebration)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="res-notes">Special Requests (Optional)</label>
+          <input type="text" id="res-notes" placeholder="Anniversary, dietary restrictions, window seat..." />
+        </div>
+
+        <button type="submit" class="btn btn-gold full-width">Confirm Reservation Request</button>
+        <p class="form-msg" id="res-msg"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" id="contact">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <a href="#" class="logo">Savoria<span>.</span></a>
+        <p>Curated fine dining, specialty coffee, and artisan desserts in a warm, welcoming atmosphere.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Navigation</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About Savoria</a></li>
+          <li><a href="#menu">Our Menu</a></li>
+          <li><a href="#reservation">Table Reservation</a></li>
+        </ul>
+      </div>
+      <div class="footer-info">
+        <h4>Visit Us</h4>
+        <p>425 Grand Avenue, Downtown</p>
+        <p>reservations@savoria-bistro.com</p>
+        <p>+1 (555) 382-9900</p>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <p>&copy; 2026 Savoria Bistro &amp; Cafe. All rights reserved. Designed by Abhay Singh.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
