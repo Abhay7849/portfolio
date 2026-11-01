@@ -543,6 +543,10 @@ ul {
   gap: 1.5rem;
 }
 
+.skills-grid.skills-grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
 .skill-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
@@ -654,6 +658,10 @@ ul {
 }
 
 /* Gradients for project thumbnails */
+.project-bg-tripsplit {
+  background: linear-gradient(135deg, #0d9488 0%, #1e3a8a 100%);
+}
+
 .project-bg-1 {
   background: linear-gradient(135deg, #1e3a8a 0%, #065f46 100%);
 }

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TripSplit - Collaborative trip expense manager and settlement optimizer built with MERN stack." />
+  <title>TripSplit | Trip Expense Manager &amp; Settlement Optimizer</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card: #131b2e;
+      --border: #24324d;
+      --primary: #3b82f6;
+      --cyan: #06b6d4;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --success: #10b981;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Plus Jakarta Sans', system-ui, sans-serif; }
+    body { background: var(--bg); color: var(--text); line-height: 1.6; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .nav-back { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--cyan); text-decoration: none; font-size: 0.9rem; font-weight: 600; margin-bottom: 2rem; }
+    .nav-back:hover { text-decoration: underline; }
+    
+    .hero-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; margin-bottom: 2.5rem; position: relative; overflow: hidden; }
+    .badge { display: inline-block; background: rgba(59, 130, 246, 0.15); color: var(--cyan); border: 1px solid rgba(6, 182, 212, 0.3); font-size: 0.8rem; font-weight: 700; padding: 0.3rem 0.8rem; border-radius: 999px; margin-bottom: 1rem; }
+    h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 0.75rem; letter-spacing: -0.5px; }
+    .sub { color: var(--muted); font-size: 1.05rem; max-width: 750px; margin-bottom: 1.5rem; }
+    
+    .tech-stack { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .tech-pill { background: #1e293b; border: 1px solid var(--border); color: #cbd5e1; font-size: 0.8rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 6px; }
+
+    /* Interactive Demo Card */
+    .demo-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; margin-bottom: 2.5rem; }
+    .demo-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+    .demo-header h2 { font-size: 1.35rem; font-weight: 700; }
+    .trip-badge { background: rgba(16, 185, 129, 0.15); color: var(--success); padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.82rem; font-weight: 600; }
+    
+    .members-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .member-box { background: #1a243d; border: 1px solid var(--border); padding: 1rem; border-radius: 10px; }
+    .member-name { font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 0.4rem; }
+    .member-spent { font-size: 0.85rem; color: var(--muted); margin-top: 0.25rem; }
+    .member-balance { font-size: 0.9rem; font-weight: 700; margin-top: 0.5rem; }
+    .positive { color: #10b981; }
+    .negative { color: #ef4444; }
+
+    .expenses-list { margin-bottom: 2rem; }
+    .expenses-list h3 { font-size: 1.1rem; margin-bottom: 0.75rem; color: #cbd5e1; }
+    .expense-row { display: flex; justify-content: space-between; align-items: center; background: #1e293b; border: 1px solid var(--border); padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 0.5rem; font-size: 0.9rem; }
+    .expense-cat { background: rgba(59, 130, 246, 0.2); color: var(--cyan); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; margin-left: 0.5rem; }
+    .expense-amt { font-weight: 700; color: #f8fafc; }
+
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.95rem; }
+    .btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    
+    /* Settlement Output */
+    .settlement-box { margin-top: 1.5rem; background: #0f172a; border: 1px solid #334155; border-radius: 10px; padding: 1.5rem; display: none; }
+    .settlement-box.show { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    .settlement-item { display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px dashed #334155; font-size: 0.92rem; }
+    .settlement-item:last-child { border-bottom: none; }
+    .whatsapp-btn { background: #25d366; color: white; text-decoration: none; padding: 0.3rem 0.7rem; border-radius: 6px; font-size: 0.78rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+    
+    /* Features breakdown */
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .feature-item { background: var(--card); border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; }
+    .feature-item h3 { font-size: 1.1rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+    .feature-item p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
+
+    footer { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../../index.html#projects" class="nav-back">← Back to Portfolio</a>
+
+    <div class="hero-box">
+      <span class="badge">MERN Stack • Full Stack Project</span>
+      <h1>TripSplit — Collaborative Expense &amp; Settlement Optimizer</h1>
+      <p class="sub">
+        A production-ready full-stack MERN web application engineered for group expense tracking, dynamic split calculation, and optimal debt settlement using a greedy min-cash-flow algorithm.
+      </p>
+
+      <div class="tech-stack">
+        <span class="tech-pill">React 18</span>
+        <span class="tech-pill">Node.js</span>
+        <span class="tech-pill">Express.js</span>
+        <span class="tech-pill">MongoDB &amp; Mongoose</span>
+        <span class="tech-pill">Tailwind CSS</span>
+        <span class="tech-pill">JWT Auth</span>
+        <span class="tech-pill">Greedy Min-Cash-Flow Algorithm</span>
+        <span class="tech-pill">Tesseract.js OCR</span>
+        <span class="tech-pill">PDFKit</span>
+      </div>
+
+      <a href="#interactive-demo" class="btn">Try Interactive Settlement Demo ↓</a>
+    </div>
+
+    <!-- Live Simulation Demo -->
+    <div class="demo-card" id="interactive-demo">
+      <div class="demo-header">
+        <div>
+          <h2>Live Demo: "Goa Weekend Getaway" 🏖️</h2>
+          <p style="color:var(--muted); font-size:0.85rem; margin-top:3px;">Simulation showing dynamic expense recording and optimal settlements</p>
+        </div>
+        <span class="trip-badge">4 Members Active</span>
+      </div>
+
+      <!-- Members Status -->
+      <div class="members-grid">
+        <div class="member-box">
+          <div class="member-name">👤 Abhay Singh (You)</div>
+          <div class="member-spent">Paid: ₹14,000 | Share: ₹7,000</div>
+          <div class="member-balance positive">+₹7,000 (To Receive)</div>
+        </div>
+        <div class="member-box">
+          <div class="member-name">👤 Rahul Verma</div>
+          <div class="member-spent">Paid: ₹6,000 | Share: ₹9,500</div>
+          <div class="member-balance negative">-₹3,500 (Owes)</div>
+        </div>
+        <div class="member-box">
+          <div class="member-name">👤 Priya Sharma</div>
+          <div class="member-spent">Paid: ₹5,000 | Share: ₹6,500</div>
+          <div class="member-balance negative">-₹1,500 (Owes)</div>
+        </div>
+        <div class="member-box">
+          <div class="member-name">👤 Amit Patel</div>
+          <div class="member-spent">Paid: ₹3,000 | Share: ₹5,000</div>
+          <div class="member-balance negative">-₹2,000 (Owes)</div>
+        </div>
+      </div>
+
+      <!-- Sample Expenses -->
+      <div class="expenses-list">
+        <h3>Trip Expenses Logged (Total: ₹28,000)</h3>
+        <div class="expense-row">
+          <div><strong>Beachside Villa Booking</strong> <span class="expense-cat">Hotel</span> — Paid by Abhay</div>
+          <div class="expense-amt">₹12,000</div>
+        </div>
+        <div class="expense-row">
+          <div><strong>Self-Drive Car Fuel &amp; Tolls</strong> <span class="expense-cat">Transport</span> — Paid by Rahul</div>
+          <div class="expense-amt">₹6,000</div>
+        </div>
+        <div class="expense-row">
+          <div><strong>Seafood Dinner &amp; Drinks</strong> <span class="expense-cat">Food</span> — Paid by Priya</div>
+          <div class="expense-amt">₹5,000</div>
+        </div>
+        <div class="expense-row">
+          <div><strong>Water Sports &amp; Scuba Tickets</strong> <span class="expense-cat">Entertainment</span> — Paid by Amit</div>
+          <div class="expense-amt">₹3,000</div>
+        </div>
+        <div class="expense-row">
+          <div><strong>Grocery &amp; Snacks</strong> <span class="expense-cat">Food</span> — Paid by Abhay</div>
+          <div class="expense-amt">₹2,000</div>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <button class="btn" onclick="runSettlementOptimizer()">⚡ Run Settlement Optimizer Algorithm</button>
+
+      <!-- Settlement Output -->
+      <div class="settlement-box" id="settlement-output">
+        <h3 style="margin-bottom:0.75rem; color:#38bdf8;">🎯 Optimized Cash-Flow Settlements (Minimum Transactions)</h3>
+        <p style="font-size:0.85rem; color:var(--muted); margin-bottom:1rem;">Circular debts eliminated. 3 transactions resolve all balances perfectly:</p>
+
+        <div class="settlement-item">
+          <div><strong>Rahul Verma</strong> pays <strong>Abhay Singh</strong>: <span style="color:#10b981; font-weight:700;">₹3,500</span></div>
+          <span class="whatsapp-btn">💬 Send WhatsApp Reminder</span>
+        </div>
+        <div class="settlement-item">
+          <div><strong>Amit Patel</strong> pays <strong>Abhay Singh</strong>: <span style="color:#10b981; font-weight:700;">₹2,000</span></div>
+          <span class="whatsapp-btn">💬 Send WhatsApp Reminder</span>
+        </div>
+        <div class="settlement-item">
+          <div><strong>Priya Sharma</strong> pays <strong>Abhay Singh</strong>: <span style="color:#10b981; font-weight:700;">₹1,500</span></div>
+          <span class="whatsapp-btn">💬 Send WhatsApp Reminder</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Technical Architecture Highlights -->
+    <h2 style="font-size: 1.6rem; margin-bottom: 1.25rem;">Technical Implementation Highlights</h2>
+    <div class="features-grid">
+      <div class="feature-item">
+        <h3>⚡ Min-Cash-Flow Algorithm</h3>
+        <p>Uses a greedy approach with net balance priority to reduce complex N*(N-1) circular debts into the minimum possible settlement transactions.</p>
+      </div>
+
+      <div class="feature-item">
+        <h3>🔒 Secure JWT Authentication</h3>
+        <p>Stateless session management using JSON Web Tokens with bcrypt password encryption and protected Express middleware route guards.</p>
+      </div>
+
+      <div class="feature-item">
+        <h3>🧾 OCR Receipt Scanner</h3>
+        <p>Integrated Tesseract.js optical character recognition allowing users to upload photo bills and automatically suggest vendor, date, and amount.</p>
+      </div>
+
+      <div class="feature-item">
+        <h3>📊 Analytics &amp; PDF Export</h3>
+        <p>Interactive Recharts spending visualizations with PDFKit export capability for generating structured expense summaries.</p>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2026 TripSplit. Built by Abhay Singh | Full Stack Web Developer.</p>
+    </footer>
+  </div>
+
+  <script>
+    function runSettlementOptimizer() {
+      const box = document.getElementById('settlement-output');
+      box.classList.add('show');
+      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  </script>
+</body>
+</html>
