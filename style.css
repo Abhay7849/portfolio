@@ -199,6 +199,20 @@ ul {
   letter-spacing: -0.5px;
 }
 
+.badge-role {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-glow);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  vertical-align: middle;
+  margin-left: 0.35rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
 .logo-accent {
   color: var(--accent);
 }
@@ -343,7 +357,35 @@ ul {
   color: var(--text-secondary);
   line-height: 1.7;
   max-width: 680px;
+  margin: 0 auto 1.5rem;
+}
+
+/* Core Stack Pills in Hero */
+.hero-stack-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  max-width: 680px;
   margin: 0 auto 2.25rem;
+}
+
+.stack-pill {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  transition: all var(--transition-fast);
+}
+
+.stack-pill:hover {
+  border-color: var(--primary);
+  color: var(--text-primary);
+  transform: translateY(-2px);
+  background: var(--bg-card-hover);
 }
 
 .hero-actions {
@@ -549,6 +591,25 @@ ul {
   font-size: 0.9rem;
   color: var(--text-secondary);
   line-height: 1.6;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.skill-tags span {
+  font-size: 0.75rem;
+  background: var(--bg-surface);
+  color: var(--accent);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  font-weight: 600;
 }
 
 /* ==========================================================================
