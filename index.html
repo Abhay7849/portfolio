@@ -3,24 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Portfolio of Abhay Singh — Full Stack Web Developer specializing in MERN stack, Python, REST APIs, and high-performance responsive web applications." />
-  <title>Abhay Singh | Full Stack Web Developer</title>
+  <meta name="description" content="Abhay Singh — Freelance Full Stack Web Developer. Modern, scalable, and user-friendly web applications built with MERN stack, Python, and RESTful architectures." />
+  <title>Abhay Singh | Full Stack Developer</title>
 
-  <!-- Google Fonts for modern typography -->
+  <!-- Google Fonts: Space Grotesk for futuristic headings, Plus Jakarta Sans for body -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Three.js from CDN for interactive 3D hero visualization -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
+  <!-- Custom Interactive Cursor -->
+  <div class="custom-cursor-dot" id="cursor-dot"></div>
+  <div class="custom-cursor-ring" id="cursor-ring"></div>
+
+  <!-- Ambient Background Glow Mesh -->
+  <div class="ambient-mesh">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+  </div>
+
   <!-- ========================================================== -->
-  <!-- NAVIGATION BAR                                             -->
+  <!-- NAVIGATION BAR (Glassmorphism & Sticky)                    -->
   <!-- ========================================================== -->
   <header class="navbar" id="navbar">
     <div class="container nav-container">
       <a href="#hero" class="brand-logo">
-        <span class="logo-accent">&lt;</span>Abhay Singh <span class="badge-role">Full Stack</span><span class="logo-accent"> /&gt;</span>
+        <span class="logo-code">&lt;</span>Abhay Singh<span class="logo-accent">.dev</span><span class="logo-code"> /&gt;</span>
       </a>
 
       <!-- Desktop Navigation Menu -->
@@ -31,12 +45,13 @@
           <li><a href="#skills" class="nav-link">Skills</a></li>
           <li><a href="#projects" class="nav-link">Projects</a></li>
           <li><a href="#services" class="nav-link">Services</a></li>
-          <li><a href="#contact" class="btn btn-primary nav-cta">Hire Me</a></li>
+          <li><a href="#process" class="nav-link">Process</a></li>
+          <li><a href="#contact" class="btn btn-primary nav-cta">Let's Talk</a></li>
         </ul>
       </nav>
 
       <!-- Mobile Hamburger Button -->
-      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu">
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
         <span class="bar"></span>
         <span class="bar"></span>
         <span class="bar"></span>
@@ -46,56 +61,69 @@
 
   <main>
     <!-- ========================================================== -->
-    <!-- HERO SECTION                                               -->
+    <!-- HERO SECTION (Full Screen with Interactive 3D Canvas)      -->
     <!-- ========================================================== -->
     <section class="hero-section" id="hero">
-      <div class="container hero-container">
-        <div class="hero-content">
+      <div class="container hero-grid">
+        <div class="hero-content reveal-on-scroll">
           <!-- Availability Badge -->
           <div class="badge">
-            <span class="badge-dot"></span> Full Stack Web Developer
+            <span class="badge-dot"></span> Available for Freelance Projects
           </div>
 
           <h1 class="hero-title">
             Hi, I'm <span class="highlight">Abhay Singh</span> —<br />
-            Full Stack Web Developer.
+            Full Stack Developer.
           </h1>
 
           <p class="hero-description">
-            Passionate Full Stack Web Developer specializing in the MERN stack (MongoDB, Express.js, React.js, Node.js). I engineer scalable, responsive, and user-friendly web applications with clean architecture, robust REST APIs, and seamless database integration.
+            I build modern, scalable, and user-friendly web applications. Specializing in the MERN stack (MongoDB, Express.js, React.js, Node.js), clean REST API architectures, and responsive digital experiences designed for international businesses.
           </p>
 
-          <!-- Core Stack Pills -->
+          <!-- Core Stack Chips -->
           <div class="hero-stack-pills">
             <span class="stack-pill">MongoDB</span>
             <span class="stack-pill">Express.js</span>
             <span class="stack-pill">React.js</span>
             <span class="stack-pill">Node.js</span>
-            <span class="stack-pill">RESTful APIs</span>
-            <span class="stack-pill">JavaScript ES6+</span>
+            <span class="stack-pill">TypeScript</span>
+            <span class="stack-pill">REST APIs</span>
             <span class="stack-pill">Tailwind CSS</span>
-            <span class="stack-pill">Git &amp; GitHub</span>
           </div>
 
+          <!-- Prominent CTA Buttons -->
           <div class="hero-actions">
-            <a href="#projects" class="btn btn-primary">View My Work</a>
-            <a href="#contact" class="btn btn-outline">Let's Talk</a>
+            <a href="#projects" class="btn btn-primary">
+              <span>View My Work</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </a>
+            <a href="#contact" class="btn btn-outline">
+              <span>Let's Work Together</span>
+            </a>
           </div>
 
-          <!-- Quick trust indicators -->
+          <!-- Quick Metrics Bar -->
           <div class="hero-metrics">
             <div class="metric-item">
-              <span class="metric-number">MERN Stack</span>
-              <span class="metric-label">Full Stack Architecture</span>
+              <span class="metric-number">Full Stack</span>
+              <span class="metric-label">MERN &amp; APIs</span>
             </div>
             <div class="metric-item">
               <span class="metric-number">100%</span>
-              <span class="metric-label">Responsive &amp; Mobile-First</span>
+              <span class="metric-label">Responsive Layouts</span>
             </div>
             <div class="metric-item">
-              <span class="metric-number">&lt; 1.5s</span>
-              <span class="metric-label">Fast Loading &amp; Scalable</span>
+              <span class="metric-number">&lt; 1.2s</span>
+              <span class="metric-label">Fast Load Speed</span>
             </div>
+          </div>
+        </div>
+
+        <!-- Interactive 3D Canvas Visual -->
+        <div class="hero-visual-box reveal-on-scroll">
+          <div id="hero-3d-canvas" class="hero-canvas"></div>
+          <div class="canvas-hint">
+            <span class="hint-icon">✦</span> Drag or move cursor to interact in 3D
           </div>
         </div>
       </div>
@@ -106,62 +134,70 @@
     <!-- ========================================================== -->
     <section class="about-section" id="about">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal-on-scroll">
           <p class="section-tag">About Me</p>
-          <h2 class="section-title">Driven by Code, Passionate About Full-Stack</h2>
-          <p class="section-subtitle">Bridging intuitive user interfaces with robust, scalable backend architecture</p>
+          <h2 class="section-title">Driven by Analytical Thinking &amp; Clean Code</h2>
+          <p class="section-subtitle">Bridging data-driven computation with modern, human-centric web applications</p>
         </div>
 
         <div class="about-grid">
-          <div class="about-text">
+          <div class="about-text reveal-on-scroll">
             <p>
-              Hello! I am <strong>Abhay Singh</strong>, a Full Stack Web Developer with a strong academic background holding a <strong>B.Tech in Artificial Intelligence and Data Science</strong> from Arya College of Engineering, Jaipur.
+              Hello! I'm <strong>Abhay Singh</strong>, a Full Stack Web Developer based in Jaipur, India, holding a <strong>B.Tech in Artificial Intelligence and Data Science</strong> from Arya College of Engineering.
             </p>
             <p>
-              My journey merges analytical problem-solving with a genuine passion for full-stack web development. I thrive on bringing ideas from concept to production — designing component-driven, responsive frontends in <strong>React</strong>, engineering secure and high-throughput RESTful APIs with <strong>Node.js &amp; Express</strong>, and architecting flexible databases with <strong>MongoDB</strong>.
+              My background in AI and data analysis gives me a distinct technical perspective — I treat web applications not merely as visual screens, but as cohesive, performant data systems. Whether constructing component-driven reactive interfaces in <strong>React</strong> or engineering secure, high-throughput RESTful APIs with <strong>Node.js, Express, and MongoDB</strong>, I focus on clean architecture, maintainability, and exceptional user experience.
             </p>
             <p>
-              From building production-ready applications like my <em>Trip Expense Splitter</em> to creating performance-tuned business templates, I am dedicated to writing clean, maintainable code, adhering to modern best practices, and delivering reliable software.
+              I collaborate with startups, agencies, and founders globally on Upwork and Fiverr, turning project requirements into production-ready software delivered on schedule.
             </p>
 
+            <!-- 3 Core Feature Cards -->
             <div class="about-highlights">
               <div class="highlight-card">
                 <div class="highlight-icon">⚡</div>
                 <div>
                   <h4>Full-Stack Development</h4>
-                  <p>End-to-end web application engineering with the MERN stack (MongoDB, Express, React, Node.js), ensuring cohesive architecture from database to UI.</p>
+                  <p>Cohesive end-to-end engineering across the MERN stack, uniting responsive frontends with secure backend server architectures.</p>
                 </div>
               </div>
               <div class="highlight-card">
                 <div class="highlight-icon">📱</div>
                 <div>
-                  <h4>Responsive Design</h4>
-                  <p>Mobile-first, pixel-perfect user interfaces built with modern CSS, Tailwind, and React that deliver seamless experiences across all screen sizes.</p>
+                  <h4>Responsive &amp; Intuitive Design</h4>
+                  <p>Mobile-first interfaces meticulously tested across iOS, Android, tablets, and high-resolution displays for flawless responsiveness.</p>
                 </div>
               </div>
               <div class="highlight-card">
                 <div class="highlight-icon">🔌</div>
                 <div>
                   <h4>API Integration &amp; Architecture</h4>
-                  <p>Designing secure, RESTful APIs, JWT authentication, third-party service integrations, and robust database modeling for fast, reliable data flow.</p>
+                  <p>Stateless JWT authentication, robust input validation, third-party webhook handling, and indexed database queries for ultra-fast response times.</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="about-card">
+          <!-- Developer Profile Sidebar Card -->
+          <div class="about-card reveal-on-scroll">
             <div class="bio-box">
-              <h3>Developer Profile</h3>
+              <div class="bio-avatar-glow">
+                <span class="avatar-monogram">AS</span>
+              </div>
+              <h3 class="bio-name">Abhay Singh</h3>
+              <p class="bio-role">Full Stack Developer</p>
+              
               <ul class="bio-list">
-                <li><strong>Name:</strong> Abhay Singh</li>
-                <li><strong>Role:</strong> Full Stack Web Developer</li>
-                <li><strong>Specialization:</strong> MERN Stack (MongoDB, Express, React, Node.js)</li>
-                <li><strong>Education:</strong> B.Tech in Artificial Intelligence &amp; Data Science</li>
+                <li><strong>Degree:</strong> B.Tech in AI &amp; Data Science</li>
+                <li><strong>Specialization:</strong> MERN Stack &amp; REST APIs</li>
                 <li><strong>Location:</strong> Jaipur, Rajasthan, India</li>
-                <li><strong>Platforms:</strong> Upwork &amp; Fiverr</li>
+                <li><strong>Availability:</strong> Freelance Worldwide (Remote)</li>
                 <li><strong>Languages:</strong> English, Hindi</li>
               </ul>
-              <a href="#contact" class="btn btn-primary full-width">Get in Touch</a>
+
+              <div class="bio-actions">
+                <a href="#contact" class="btn btn-primary full-width">Let's Work Together</a>
+              </div>
             </div>
           </div>
         </div>
@@ -169,54 +205,66 @@
     </section>
 
     <!-- ========================================================== -->
-    <!-- SKILLS SECTION                                             -->
+    <!-- TECHNICAL SKILLS SECTION (Organized into 4 Categories)     -->
     <!-- ========================================================== -->
     <section class="skills-section" id="skills">
       <div class="container">
-        <div class="section-header">
-          <p class="section-tag">Technical Competencies</p>
-          <h2 class="section-title">Technical Skills &amp; Stack</h2>
-          <p class="section-subtitle">Organized across core frontend, backend, database, and modern developer tooling</p>
+        <div class="section-header reveal-on-scroll">
+          <p class="section-tag">Tech Stack</p>
+          <h2 class="section-title">Technical Competencies</h2>
+          <p class="section-subtitle">Real technologies and tools I utilize daily to build production-grade web applications</p>
         </div>
 
-        <div class="skills-grid skills-grid-4">
-          <!-- Category 1: Frontend -->
-          <div class="skill-card">
-            <div class="skill-icon">⚛️</div>
-            <h3 class="skill-name">Frontend</h3>
-            <p class="skill-desc">Component-driven architecture, interactive user interfaces, single-page applications, and mobile-first responsive layouts.</p>
+        <div class="skills-grid">
+          <!-- 1. Frontend -->
+          <div class="skill-card reveal-on-scroll">
+            <div class="skill-head">
+              <div class="skill-icon">⚛️</div>
+              <span class="skill-category-label">Frontend</span>
+            </div>
+            <h3 class="skill-name">Client-Side Engineering</h3>
+            <p class="skill-desc">Component-driven architecture, reactive state management, modern single-page applications (SPAs), and pixel-perfect mobile-first styling.</p>
             <div class="skill-tags">
-              <span>React.js</span><span>JavaScript (ES6+)</span><span>HTML5</span><span>CSS3</span><span>Tailwind CSS</span><span>Responsive Design</span>
+              <span>React.js</span><span>JavaScript (ES6+)</span><span>TypeScript Basics</span><span>HTML5</span><span>CSS3</span><span>Tailwind CSS</span><span>Responsive UI</span>
             </div>
           </div>
 
-          <!-- Category 2: Backend -->
-          <div class="skill-card">
-            <div class="skill-icon">🟢</div>
-            <h3 class="skill-name">Backend</h3>
-            <p class="skill-desc">Server-side application logic, scalable RESTful API engineering, middleware architecture, route protection, and token-based auth.</p>
+          <!-- 2. Backend -->
+          <div class="skill-card reveal-on-scroll">
+            <div class="skill-head">
+              <div class="skill-icon">🟢</div>
+              <span class="skill-category-label">Backend</span>
+            </div>
+            <h3 class="skill-name">Server &amp; API Architecture</h3>
+            <p class="skill-desc">Scalable server-side logic, modular RESTful APIs, asynchronous I/O, middleware configuration, and token-based route authorization.</p>
             <div class="skill-tags">
-              <span>Node.js</span><span>Express.js</span><span>RESTful APIs</span><span>JWT Auth</span><span>Python Basics</span><span>MVC Architecture</span>
+              <span>Node.js</span><span>Express.js</span><span>REST APIs</span><span>JWT Auth</span><span>Python Basics</span><span>MVC Architecture</span>
             </div>
           </div>
 
-          <!-- Category 3: Database -->
-          <div class="skill-card">
-            <div class="skill-icon">🗄️</div>
-            <h3 class="skill-name">Database</h3>
-            <p class="skill-desc">NoSQL document modeling, Mongoose ODM schemas, relational database fundamentals, data validation, and query optimization.</p>
+          <!-- 3. Database -->
+          <div class="skill-card reveal-on-scroll">
+            <div class="skill-head">
+              <div class="skill-icon">🗄️</div>
+              <span class="skill-category-label">Databases</span>
+            </div>
+            <h3 class="skill-name">Database Modeling</h3>
+            <p class="skill-desc">Document-based data structures with MongoDB and Mongoose ODM, data validation schemas, indexing strategies, and relational SQL fundamentals.</p>
             <div class="skill-tags">
-              <span>MongoDB</span><span>Mongoose ODM</span><span>Database Schema</span><span>CRUD Operations</span><span>SQL Basics</span>
+              <span>MongoDB</span><span>Mongoose ODM</span><span>Schema Design</span><span>CRUD Ops</span><span>Data Validation</span><span>SQL Basics</span>
             </div>
           </div>
 
-          <!-- Category 4: Tools -->
-          <div class="skill-card">
-            <div class="skill-icon">🛠️</div>
-            <h3 class="skill-name">Tools &amp; DevOps</h3>
-            <p class="skill-desc">Modern developer tooling, version control collaboration, API endpoint testing, and continuous cloud deployment platforms.</p>
+          <!-- 4. Tools & DevOps -->
+          <div class="skill-card reveal-on-scroll">
+            <div class="skill-head">
+              <div class="skill-icon">🛠️</div>
+              <span class="skill-category-label">DevOps &amp; Tools</span>
+            </div>
+            <h3 class="skill-name">Tooling &amp; Deployment</h3>
+            <p class="skill-desc">Modern developer workflows, branch management with Git &amp; GitHub, API testing with Postman, and automated deployment pipelines.</p>
             <div class="skill-tags">
-              <span>Git &amp; GitHub</span><span>Postman</span><span>Vite</span><span>Vercel</span><span>Netlify</span><span>VS Code</span>
+              <span>Git</span><span>GitHub</span><span>Postman</span><span>Vite</span><span>Vercel</span><span>Netlify</span><span>VS Code</span>
             </div>
           </div>
         </div>
@@ -224,94 +272,117 @@
     </section>
 
     <!-- ========================================================== -->
-    <!-- PROJECTS SECTION                                           -->
+    <!-- THREE PREMIUM PROJECT SHOWCASES                           -->
     <!-- ========================================================== -->
     <section class="projects-section" id="projects">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal-on-scroll">
           <p class="section-tag">Featured Work</p>
-          <h2 class="section-title">Projects &amp; Applications</h2>
-          <p class="section-subtitle">Full-stack web applications and interactive projects demonstrating clean code and architecture</p>
+          <h2 class="section-title">Flagship Web Applications</h2>
+          <p class="section-subtitle">Working interactive applications demonstrating full-stack engineering, algorithms, and reactive user interfaces</p>
         </div>
 
-        <div class="projects-grid">
-          <!-- Project 1: TripSplit (Actual MERN Project) -->
-          <article class="project-card">
-            <div class="project-thumbnail project-bg-tripsplit">
-              <span class="project-badge">MERN Stack • Full Stack App</span>
-              <div class="thumbnail-overlay">
-                <span class="preview-text">🌴 TripSplit Expense Splitter</span>
+        <div class="projects-list">
+          <!-- Project 1: TripSplit (Trip Expense Splitter) -->
+          <article class="project-showcase reveal-on-scroll">
+            <div class="project-visual project-bg-tripsplit">
+              <div class="visual-inner">
+                <span class="project-type-badge">Full Stack • MERN Application</span>
+                <div class="visual-graphic">
+                  <div class="graphic-chip">🌴 Trip Expense Splitter</div>
+                  <div class="graphic-desc">Greedy Min-Cash-Flow Settlement Optimizer</div>
+                </div>
               </div>
             </div>
-            <div class="project-content">
+            <div class="project-info">
+              <span class="project-index">01 / FEATURED PROJECT</span>
               <h3 class="project-title">TripSplit — Trip Expense Splitter &amp; Settlement Optimizer</h3>
               <p class="project-description">
-                A full-stack MERN application for group travel expense tracking and settlement optimization. Features dynamic equal/custom/percentage splits, receipt OCR scanning, WhatsApp summary sharing, and a greedy min-cash-flow algorithm that eliminates circular debts to minimize total transactions.
+                A production-ready full-stack MERN application for group travel expense management. Group members can create trips, add participants, and record expenses with dynamic equal, custom, or percentage splits. Features a greedy min-cash-flow algorithm that eliminates circular debts to calculate the minimum number of settlements, along with WhatsApp summary sharing and receipt OCR.
               </p>
-              <div class="project-tags">
-                <span class="tag">React 18</span>
-                <span class="tag">Node.js</span>
-                <span class="tag">Express</span>
-                <span class="tag">MongoDB</span>
-                <span class="tag">Tailwind CSS</span>
-                <span class="tag">JWT Auth</span>
-                <span class="tag">Algorithms</span>
+              <div class="project-tech-tags">
+                <span class="tech-tag">React 18</span>
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">Express.js</span>
+                <span class="tech-tag">MongoDB</span>
+                <span class="tech-tag">Tailwind CSS</span>
+                <span class="tech-tag">JWT</span>
+                <span class="tech-tag">Greedy Algorithm</span>
               </div>
-              <div class="project-links">
-                <a href="./projects/tripsplit/index.html" class="btn btn-sm btn-primary" target="_blank">Launch Live Demo</a>
-                <a href="#contact" class="btn btn-sm btn-outline">Project Inquiries</a>
+              <div class="project-cta-row">
+                <a href="./projects/tripsplit/index.html" class="btn btn-primary btn-sm" target="_blank" rel="noopener">
+                  <span>Launch Live Demo</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+                <a href="#contact" class="btn btn-outline btn-sm">Discuss Similar Project</a>
               </div>
             </div>
           </article>
 
-          <!-- Project 2: ApexGrowth Business Platform -->
-          <article class="project-card">
-            <div class="project-thumbnail project-bg-2">
-              <span class="project-badge">Corporate / SaaS Platform</span>
-              <div class="thumbnail-overlay">
-                <span class="preview-text">💼 ApexGrowth Business Platform</span>
+          <!-- Project 2: E-Commerce Platform (AuraShop) -->
+          <article class="project-showcase reverse reveal-on-scroll">
+            <div class="project-visual project-bg-ecommerce">
+              <div class="visual-inner">
+                <span class="project-type-badge">Full Stack • E-Commerce Application</span>
+                <div class="visual-graphic">
+                  <div class="graphic-chip">🛒 AuraShop Modern Storefront</div>
+                  <div class="graphic-desc">Live Search • Reactive Cart • Responsive Checkout</div>
+                </div>
               </div>
             </div>
-            <div class="project-content">
-              <h3 class="project-title">ApexGrowth — Business &amp; Agency Template</h3>
+            <div class="project-info">
+              <span class="project-index">02 / FEATURED PROJECT</span>
+              <h3 class="project-title">AuraShop — Modern E-Commerce Platform</h3>
               <p class="project-description">
-                A conversion-focused corporate platform featuring dynamic monthly/annual pricing calculators, simulated analytics dashboard widgets, an interactive accordion FAQ, and a lead capture workflow.
+                A high-performance modern e-commerce storefront featuring real-time product search, instant category filtering, an interactive slide-over shopping bag with dynamic quantity management, subtotal calculations, and a complete responsive checkout flow. Built to showcase scalable frontend architecture and shopping cart state management.
               </p>
-              <div class="project-tags">
-                <span class="tag">HTML5 / CSS3</span>
-                <span class="tag">JavaScript ES6+</span>
-                <span class="tag">Interactive UI</span>
-                <span class="tag">Mobile-First</span>
+              <div class="project-tech-tags">
+                <span class="tech-tag">JavaScript (ES6+)</span>
+                <span class="tech-tag">Reactive State</span>
+                <span class="tech-tag">Cart Engine</span>
+                <span class="tech-tag">Checkout Flow</span>
+                <span class="tech-tag">Mobile-First</span>
               </div>
-              <div class="project-links">
-                <a href="./projects/business-template/index.html" class="btn btn-sm btn-primary" target="_blank">Launch Live Demo</a>
-                <a href="#contact" class="btn btn-sm btn-outline">Project Inquiries</a>
+              <div class="project-cta-row">
+                <a href="./projects/ecommerce-platform/index.html" class="btn btn-primary btn-sm" target="_blank" rel="noopener">
+                  <span>Launch Live Demo</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+                <a href="#contact" class="btn btn-outline btn-sm">Discuss Similar Project</a>
               </div>
             </div>
           </article>
 
-          <!-- Project 3: Savoria Restaurant Portal -->
-          <article class="project-card">
-            <div class="project-thumbnail project-bg-1">
-              <span class="project-badge">Web Application</span>
-              <div class="thumbnail-overlay">
-                <span class="preview-text">🍽️ Savoria Restaurant Portal</span>
+          <!-- Project 3: Task Management Dashboard (SprintFlow) -->
+          <article class="project-showcase reveal-on-scroll">
+            <div class="project-visual project-bg-tasks">
+              <div class="visual-inner">
+                <span class="project-type-badge">Productivity SaaS • Kanban Board</span>
+                <div class="visual-graphic">
+                  <div class="graphic-chip">⚡ SprintFlow Productivity Board</div>
+                  <div class="graphic-desc">Interactive Kanban • Sprint Velocity • Task State</div>
+                </div>
               </div>
             </div>
-            <div class="project-content">
-              <h3 class="project-title">Savoria — Restaurant &amp; Cafe Website</h3>
+            <div class="project-info">
+              <span class="project-index">03 / FEATURED PROJECT</span>
+              <h3 class="project-title">SprintFlow — Task Management &amp; Productivity Dashboard</h3>
               <p class="project-description">
-                A boutique dining application featuring an instant category-filtered menu engine, customer testimonial cards, and an interactive online table reservation request form with instant validation.
+                An interactive task management dashboard built for agile sprint workflows. Features real-time sprint velocity metrics, completion rate calculation, interactive Kanban columns (To Do, In Progress, Completed), dynamic task creation modal, priority categorization, and task stage state transitions.
               </p>
-              <div class="project-tags">
-                <span class="tag">HTML5 / CSS3</span>
-                <span class="tag">Dynamic Filtering</span>
-                <span class="tag">Form Engine</span>
-                <span class="tag">100% Responsive</span>
+              <div class="project-tech-tags">
+                <span class="tech-tag">Single Page App</span>
+                <span class="tech-tag">Kanban Engine</span>
+                <span class="tech-tag">State Manipulation</span>
+                <span class="tech-tag">Dashboard Analytics</span>
+                <span class="tech-tag">CSS Grid</span>
               </div>
-              <div class="project-links">
-                <a href="./projects/restaurant-landing/index.html" class="btn btn-sm btn-primary" target="_blank">Launch Live Demo</a>
-                <a href="#contact" class="btn btn-sm btn-outline">Project Inquiries</a>
+              <div class="project-cta-row">
+                <a href="./projects/task-dashboard/index.html" class="btn btn-primary btn-sm" target="_blank" rel="noopener">
+                  <span>Launch Live Demo</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+                <a href="#contact" class="btn btn-outline btn-sm">Discuss Similar Project</a>
               </div>
             </div>
           </article>
@@ -324,52 +395,66 @@
     <!-- ========================================================== -->
     <section class="services-section" id="services">
       <div class="container">
-        <div class="section-header">
-          <p class="section-tag">Services Offered</p>
-          <h2 class="section-title">What I Can Build For You</h2>
-          <p class="section-subtitle">Tailored full-stack services designed to take your digital product from concept to production</p>
+        <div class="section-header reveal-on-scroll">
+          <p class="section-tag">What I Offer</p>
+          <h2 class="section-title">Full Stack Web Services</h2>
+          <p class="section-subtitle">End-to-end technical solutions designed to build, launch, and scale your digital products</p>
         </div>
 
         <div class="services-grid">
           <!-- Service 1 -->
-          <div class="service-card">
-            <div class="service-icon">⚡</div>
-            <h3 class="service-title">Full Stack Web Applications</h3>
+          <div class="service-card reveal-on-scroll">
+            <div class="service-icon-box">⚡</div>
+            <h3 class="service-title">Full Stack Development</h3>
             <p class="service-desc">
-              Complete end-to-end web applications and SaaS MVPs built with React, Node.js/Express, Python, and MongoDB. Secure user authentication, dashboards, and role management.
+              Custom web applications, dashboards, and SaaS MVPs engineered from scratch with React, Node.js, Express, and MongoDB. Includes authentication, roles, and database modeling.
             </p>
-            <ul class="service-features">
+            <ul class="service-checklist">
               <li>✓ Modular React frontend architecture</li>
-              <li>✓ Secure REST API backend &amp; DB modeling</li>
-              <li>✓ User authentication &amp; data validation</li>
+              <li>✓ Secure REST API backend &amp; DB schemas</li>
+              <li>✓ Stateless token authentication (JWT)</li>
             </ul>
           </div>
 
           <!-- Service 2 -->
-          <div class="service-card">
-            <div class="service-icon">🔌</div>
-            <h3 class="service-title">API Development &amp; Integrations</h3>
+          <div class="service-card reveal-on-scroll">
+            <div class="service-icon-box">📱</div>
+            <h3 class="service-title">Responsive Website Development</h3>
             <p class="service-desc">
-              Custom REST API development, third-party payment gateway integration (Stripe, PayPal, Razorpay), external webhooks, and legacy backend modernization.
+              High-converting business websites, portfolios, and landing pages designed to load in under 1.5 seconds and deliver a flawless user experience on all screen sizes.
             </p>
-            <ul class="service-features">
-              <li>✓ Clean, well-documented endpoints (Postman)</li>
-              <li>✓ Fast response times &amp; error handling</li>
-              <li>✓ Secure token authorization (JWT)</li>
+            <ul class="service-checklist">
+              <li>✓ 100% mobile, tablet, and desktop responsiveness</li>
+              <li>✓ Core Web Vitals speed optimization</li>
+              <li>✓ Clean, semantic SEO-friendly markup</li>
             </ul>
           </div>
 
           <!-- Service 3 -->
-          <div class="service-card">
-            <div class="service-icon">🚀</div>
-            <h3 class="service-title">High-Converting Websites &amp; Landing Pages</h3>
+          <div class="service-card reveal-on-scroll">
+            <div class="service-icon-box">🎨</div>
+            <h3 class="service-title">UI/UX Implementation</h3>
             <p class="service-desc">
-              Fast, responsive, SEO-ready business websites and product landing pages designed to maximize lead conversions and showcase your brand authority.
+              Transforming Figma designs, wireframes, or concepts into pixel-perfect, accessible code with smooth transitions, modern styling, and intuitive interaction design.
             </p>
-            <ul class="service-features">
-              <li>✓ 100% mobile-friendly on all devices</li>
-              <li>✓ Sub-second load times &amp; clean code</li>
-              <li>✓ Lead generation forms &amp; analytics ready</li>
+            <ul class="service-checklist">
+              <li>✓ Pixel-perfect Figma to HTML/React conversion</li>
+              <li>✓ Modern Tailwind CSS or styled components</li>
+              <li>✓ Keyboard navigation &amp; accessibility support</li>
+            </ul>
+          </div>
+
+          <!-- Service 4 -->
+          <div class="service-card reveal-on-scroll">
+            <div class="service-icon-box">🛠️</div>
+            <h3 class="service-title">Website Maintenance &amp; Optimization</h3>
+            <p class="service-desc">
+              Resolving broken layouts, fixing cross-browser compatibility bugs, debugging JavaScript errors, and tuning database queries for existing web projects.
+            </p>
+            <ul class="service-checklist">
+              <li>✓ Bug fixing across HTML, CSS, JS, and Node.js</li>
+              <li>✓ Layout refactoring &amp; mobile overflow fixes</li>
+              <li>✓ Cloud deployment setup (Vercel, Netlify)</li>
             </ul>
           </div>
         </div>
@@ -377,17 +462,109 @@
     </section>
 
     <!-- ========================================================== -->
-    <!-- CONTACT SECTION                                            -->
+    <!-- MY PROCESS SECTION (4 Clear Steps)                         -->
+    <!-- ========================================================== -->
+    <section class="process-section" id="process">
+      <div class="container">
+        <div class="section-header reveal-on-scroll">
+          <p class="section-tag">How I Work</p>
+          <h2 class="section-title">My Development Process</h2>
+          <p class="section-subtitle">A transparent, structured workflow ensuring on-time delivery and high standards</p>
+        </div>
+
+        <div class="process-grid">
+          <!-- Step 1 -->
+          <div class="process-card reveal-on-scroll">
+            <div class="step-badge">01</div>
+            <h3 class="process-title">Discovery</h3>
+            <p class="process-desc">
+              Deep-dive into your project requirements, target audience, technical scope, and milestones. Establishing clear deliverables and architectural strategy.
+            </p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="process-card reveal-on-scroll">
+            <div class="step-badge">02</div>
+            <h3 class="process-title">Design</h3>
+            <p class="process-desc">
+              Wireframing, UI/UX prototyping, and component structure planning. Establishing responsive layouts, design tokens, and user flow before writing code.
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="process-card reveal-on-scroll">
+            <div class="step-badge">03</div>
+            <h3 class="process-title">Development</h3>
+            <p class="process-desc">
+              Hand-crafting modular code with the MERN stack or modern JavaScript. Writing clean REST APIs, structured database schemas, and daily progress commits.
+            </p>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="process-card reveal-on-scroll">
+            <div class="step-badge">04</div>
+            <h3 class="process-title">Delivery</h3>
+            <p class="process-desc">
+              Rigorous cross-browser and mobile device testing, speed optimization, seamless cloud deployment, and comprehensive documentation handoff.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- WORK PHILOSOPHY & COLLABORATION STANDARDS                  -->
+    <!-- ========================================================== -->
+    <section class="standards-section">
+      <div class="container">
+        <div class="standards-box reveal-on-scroll">
+          <div class="standards-content">
+            <p class="section-tag">Client Commitment</p>
+            <h2 class="section-title">Why Clients Trust My Work</h2>
+            <p class="section-subtitle" style="margin-bottom: 2rem;">
+              Dedicated to building long-term freelance partnerships through transparency, clean code, and dependable communication.
+            </p>
+
+            <div class="standards-grid">
+              <div class="standard-item">
+                <span class="standard-check">✓</span>
+                <div>
+                  <strong>100% Transparent Communication</strong>
+                  <p>Daily milestone updates, prompt messaging across time zones, and clear delivery timelines.</p>
+                </div>
+              </div>
+              <div class="standard-item">
+                <span class="standard-check">✓</span>
+                <div>
+                  <strong>Clean, Documented Code</strong>
+                  <p>Well-commented, maintainable code adhering to W3C standards and modern best practices.</p>
+                </div>
+              </div>
+              <div class="standard-item">
+                <span class="standard-check">✓</span>
+                <div>
+                  <strong>Post-Launch Warranty</strong>
+                  <p>Complimentary bug-fixing support after deployment to ensure your product runs smoothly.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- CONTACT SECTION (Form Validation & Direct Links)          -->
     <!-- ========================================================== -->
     <section class="contact-section" id="contact">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal-on-scroll">
           <p class="section-tag">Let's Connect</p>
           <h2 class="section-title">Start Your Project Today</h2>
           <p class="section-subtitle">Have an upcoming web application, API requirement, or freelance project? Let's discuss it!</p>
         </div>
 
-        <div class="contact-card">
+        <div class="contact-card reveal-on-scroll">
           <div class="contact-info">
             <h3>Get In Touch Directly</h3>
             <p>I am available for freelance contracts and project collaborations. I usually respond within a few hours.</p>
@@ -437,39 +614,54 @@
                   <span class="method-val">linkedin.com/in/abhay-singh-666528428</span>
                 </div>
               </a>
+
+              <!-- GitHub Profile Link -->
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="contact-method-link">
+                <span class="icon">💻</span>
+                <div>
+                  <span class="method-title">Code Repositories</span>
+                  <span class="method-val">github.com</span>
+                </div>
+              </a>
             </div>
           </div>
 
-          <!-- Contact Form (Directly opens visitor's email client) -->
-          <form class="contact-form" id="contact-form" onsubmit="handleContactSubmit(event)">
+          <!-- Contact Form with Client-Side Validation -->
+          <form class="contact-form" id="contact-form" onsubmit="handleContactSubmit(event)" novalidate>
             <div class="form-group">
-              <label for="name">Your Name</label>
+              <label for="name">Your Name <span class="required-star">*</span></label>
               <input type="text" id="name" placeholder="e.g. John Doe" required />
+              <span class="input-error" id="name-error"></span>
             </div>
 
             <div class="form-group">
-              <label for="email">Your Email</label>
+              <label for="email">Your Email <span class="required-star">*</span></label>
               <input type="email" id="email" placeholder="e.g. john@example.com" required />
+              <span class="input-error" id="email-error"></span>
             </div>
 
             <div class="form-group">
               <label for="service-needed">Project Type</label>
               <select id="service-needed">
-                <option value="Full Stack Web Application (MERN / Python)">Full Stack Web Application (MERN / Python)</option>
+                <option value="Full Stack Web Application (MERN)">Full Stack Web Application (MERN)</option>
+                <option value="Responsive Website / Landing Page">Responsive Website / Landing Page</option>
                 <option value="REST API Development & Database Setup">REST API Development &amp; Database Setup</option>
-                <option value="High-Converting Landing Page">High-Converting Landing Page</option>
-                <option value="Business Website Redesign & Mobile Fix">Business Website Redesign &amp; Mobile Fix</option>
-                <option value="Custom Web Consulting">Custom Web Project / Consultation</option>
+                <option value="UI/UX Implementation & Bug Fixes">UI/UX Implementation &amp; Bug Fixes</option>
+                <option value="Custom Project Consultation">Custom Project Consultation</option>
               </select>
             </div>
 
             <div class="form-group">
-              <label for="message">Project Scope &amp; Requirements</label>
-              <textarea id="message" rows="4" placeholder="Briefly describe your project goals, preferred stack, and timeline..." required></textarea>
+              <label for="message">Project Scope &amp; Details <span class="required-star">*</span></label>
+              <textarea id="message" rows="4" placeholder="Briefly describe what you're looking to build, expected timeline, and goals..." required></textarea>
+              <span class="input-error" id="message-error"></span>
             </div>
 
-            <button type="submit" class="btn btn-primary full-width">Send Project Inquiry via Email</button>
-            <p class="form-note">🔒 Opens directly in your email client with your message pre-formatted.</p>
+            <button type="submit" class="btn btn-primary full-width" id="submit-btn">
+              <span>Send Project Inquiry</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+            <p class="form-status" id="form-status"></p>
           </form>
         </div>
       </div>
@@ -481,9 +673,16 @@
   <!-- ========================================================== -->
   <footer class="footer">
     <div class="container footer-container">
-      <p>&copy; <span id="current-year">2026</span> Abhay Singh. Full Stack Web Developer. All rights reserved.</p>
-      <div class="footer-links">
-        <a href="#hero">Back to Top ↑</a>
+      <div class="footer-left">
+        <a href="#hero" class="footer-brand">Abhay Singh<span>.dev</span></a>
+        <p class="footer-tagline">Crafting modern, scalable, and responsive digital web products.</p>
+      </div>
+
+      <div class="footer-right">
+        <p>&copy; <span id="current-year">2026</span> Abhay Singh. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="#hero">Back to Top ↑</a>
+        </div>
       </div>
     </div>
   </footer>
