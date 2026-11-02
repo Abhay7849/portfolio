@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Vanta — AI-Powered Creative Commerce Platform for futuristic tech, luxury kinetic hardware, and design goods." />
+  <title>Vanta | Creative Commerce Platform</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Three.js from CDN for interactive 3D product visualizer -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #06070a;
+      --card: rgba(14, 18, 28, 0.75);
+      --card-hover: rgba(22, 29, 46, 0.9);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-glow: #38bdf8;
+      --primary: #38bdf8;
+      --purple: #8b5cf6;
+      --accent: linear-gradient(135deg, #38bdf8 0%, #8b5cf6 100%);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --success: #10b981;
+      --danger: #ef4444;
+      --font-heading: 'Space Grotesk', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --radius: 12px;
+      --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; font-family:var(--font-body); }
+    body { background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; min-height: 100vh; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 1.75rem; }
+
+    /* Top Luxury Navbar */
+    .vanta-nav {
+      position: sticky;
+      top: 0;
+      background: rgba(6, 7, 10, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      height: 76px;
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; gap: 1.5rem; }
+    
+    .brand-cluster { display: flex; align-items: center; gap: 1rem; }
+    .portfolio-back {
+      font-size: 0.8rem;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      transition: var(--transition);
+      background: rgba(255,255,255,0.04);
+    }
+    .portfolio-back:hover { color: var(--primary); border-color: var(--primary); }
+
+    .vanta-logo {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: var(--accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .vanta-badge { font-size: 0.68rem; font-family: var(--font-mono); color: var(--primary); border: 1px solid rgba(56, 189, 248, 0.3); padding: 0.15rem 0.45rem; border-radius: 4px; -webkit-text-fill-color: initial; }
+
+    /* Search & Action Controls */
+    .nav-search {
+      flex: 1;
+      max-width: 420px;
+      position: relative;
+    }
+    .search-input {
+      width: 100%;
+      background: rgba(14, 18, 28, 0.8);
+      border: 1px solid var(--border);
+      padding: 0.65rem 1rem 0.65rem 2.5rem;
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 0.9rem;
+      outline: none;
+      transition: var(--transition);
+    }
+    .search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15); }
+    .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.9rem; color: var(--muted); }
+
+    .nav-actions { display: flex; align-items: center; gap: 0.75rem; }
+    .action-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 0.6rem 1rem;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      transition: var(--transition);
+      position: relative;
+    }
+    .action-btn:hover { border-color: var(--primary); background: var(--card-hover); }
+    .badge-count {
+      background: var(--primary);
+      color: #000;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+    }
+
+    /* Hero 3D Stage Section */
+    .hero-stage {
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--border);
+      background: radial-gradient(circle at 75% 30%, rgba(56, 189, 248, 0.08) 0%, transparent 60%);
+    }
+    .stage-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+    .stage-content { max-width: 520px; }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      margin-bottom: 1.25rem;
+    }
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: 3.1rem;
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+    }
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    /* 3D Model Viewport */
+    .product-3d-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      height: 440px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+    #product-3d-canvas { width: 100%; height: 100%; position: absolute; inset: 0; }
+    
+    .model-controls-overlay {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      background: rgba(6, 7, 10, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      padding: 0.6rem 1rem;
+      border-radius: 12px;
+    }
+    .custom-finishes { display: flex; align-items: center; gap: 0.6rem; }
+    .finish-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .finish-dot.active, .finish-dot:hover { border-color: #fff; transform: scale(1.15); }
+
+    .model-toggles { display: flex; gap: 0.5rem; }
+    .tool-btn {
+      font-size: 0.78rem;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.65rem;
+      border-radius: 6px;
+      transition: var(--transition);
+    }
+    .tool-btn.active, .tool-btn:hover { color: var(--primary); border-color: var(--primary); }
+
+    /* Filter & Sort Bar */
+    .catalog-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 3rem 0 2rem;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+    }
+    .category-pills { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .cat-pill {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.5rem 1.15rem;
+      border-radius: 999px;
+      transition: var(--transition);
+    }
+    .cat-pill.active, .cat-pill:hover {
+      background: var(--primary);
+      color: #000;
+      border-color: var(--primary);
+      font-weight: 700;
+    }
+    
+    .sort-wrap { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--muted); }
+    .sort-select {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      outline: none;
+      font-size: 0.85rem;
+    }
+
+    /* Product Grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-bottom: 5rem;
+    }
+    .product-card {
+      background: var(--card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+      position: relative;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(56, 189, 248, 0.35);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+
+    .card-thumb-box {
+      height: 230px;
+      background: #0a0e1a;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .product-card:hover .card-img { transform: scale(1.06); }
+    
+    .wish-toggle {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(6, 7, 10, 0.7);
+      backdrop-filter: blur(6px);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: var(--transition);
+      z-index: 5;
+    }
+    .wish-toggle.active { color: #f43f5e; border-color: #f43f5e; }
+
+    .card-category { font-size: 0.72rem; font-family: var(--font-mono); color: var(--primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.3rem; }
+    .card-body { padding: 1.4rem; display: flex; flex-direction: column; flex-grow: 1; }
+    .card-title { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .card-rating { font-size: 0.8rem; color: #fbbf24; margin-bottom: 0.75rem; }
+    .card-rating span { color: var(--muted); margin-left: 0.3rem; }
+
+    .card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .card-price { font-size: 1.35rem; font-weight: 800; font-family: var(--font-heading); color: #ffffff; }
+    .add-cart-btn {
+      background: var(--primary);
+      color: #000;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.55rem 1rem;
+      border-radius: 8px;
+      transition: var(--transition);
+    }
+    .add-cart-btn:hover { background: #7dd3fc; transform: scale(1.02); }
+
+    /* Drawers (Cart & Wishlist) */
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .drawer-overlay.open { opacity: 1; pointer-events: auto; }
+    
+    .vanta-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      max-width: 440px;
+      height: 100vh;
+      background: #090c14;
+      border-left: 1px solid var(--border);
+      z-index: 201;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+    .drawer-overlay.open .vanta-drawer { transform: translateX(0); }
+
+    .drawer-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .drawer-title { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; }
+    .drawer-close { font-size: 1.5rem; color: var(--muted); cursor: pointer; }
+    
+    .drawer-body { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+    .drawer-item {
+      display: flex;
+      gap: 1rem;
+      background: #101626;
+      border: 1px solid var(--border);
+      padding: 0.85rem;
+      border-radius: 10px;
+      align-items: center;
+    }
+    .drawer-img { width: 68px; height: 68px; border-radius: 8px; object-fit: cover; }
+    .drawer-info { flex: 1; }
+    .drawer-item-title { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .drawer-item-price { font-size: 0.88rem; color: var(--primary); font-weight: 600; }
+    .qty-row { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.4rem; }
+    .qty-btn { width: 22px; height: 22px; border-radius: 4px; background: #1a233a; border: 1px solid var(--border); color: #fff; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    
+    .drawer-footer { padding: 1.5rem; border-top: 1px solid var(--border); background: #06080e; }
+    .promo-box { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+    .promo-input { flex: 1; background: #101626; border: 1px solid var(--border); padding: 0.5rem 0.8rem; border-radius: 6px; color: #fff; font-size: 0.85rem; outline: none; }
+    .promo-btn { background: #1f293d; color: var(--text); border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; font-size: 0.82rem; font-weight: 600; }
+    
+    .price-summary-row { display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--muted); margin-bottom: 0.4rem; }
+    .price-summary-row.total { font-size: 1.25rem; font-weight: 800; color: #fff; border-top: 1px dashed var(--border); padding-top: 0.75rem; margin-top: 0.75rem; }
+    .checkout-action-btn { width: 100%; background: var(--accent); color: #fff; font-weight: 700; font-size: 1rem; padding: 0.9rem; border-radius: 10px; margin-top: 1rem; transition: var(--transition); }
+    .checkout-action-btn:hover { filter: brightness(1.1); }
+
+    /* Modals (Product Detail & Checkout) */
+    .vanta-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 250;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .vanta-modal.open { display: flex; }
+    .modal-sheet {
+      background: #0a0d16;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      max-width: 620px;
+      width: 100%;
+      padding: 2.25rem;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+    }
+    .modal-close-btn { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 1.5rem; color: var(--muted); cursor: pointer; }
+
+    /* Toast */
+    .vanta-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f1629;
+      border: 1px solid var(--primary);
+      color: #fff;
+      padding: 0.9rem 1.4rem;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      z-index: 300;
+      transform: translateY(140%);
+      transition: transform 0.3s ease;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .vanta-toast.show { transform: translateY(0); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 900px) {
+      .stage-grid { grid-template-columns: 1fr; }
+      .product-3d-box { height: 360px; }
+      .hero-title { font-size: 2.3rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Header -->
+  <header class="vanta-nav">
+    <div class="container nav-inner">
+      <div class="brand-cluster">
+        <a href="../../index.html#projects" class="portfolio-back">← Portfolio</a>
+        <div class="vanta-logo">VANTA <span class="vanta-badge">STUDIO</span></div>
+      </div>
+
+      <div class="nav-search">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="catalog-search" class="search-input" placeholder="Search neural spatial audio, wearables, hardware..." oninput="handleSearch(this.value)" />
+      </div>
+
+      <div class="nav-actions">
+        <button class="action-btn" onclick="openModal('orders-modal')" title="Order History">
+          <span>📜 Orders</span>
+        </button>
+        <button class="action-btn" onclick="toggleDrawer('wishlist-drawer', true)">
+          <span>❤️ Wishlist</span>
+          <span class="badge-count" id="wish-count">0</span>
+        </button>
+        <button class="action-btn" onclick="toggleDrawer('cart-drawer', true)">
+          <span>🛒 Bag</span>
+          <span class="badge-count" id="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero 3D Interactive Stage -->
+    <section class="hero-stage">
+      <div class="stage-grid">
+        <div class="stage-content">
+          <div class="hero-tag">⚡ 2026 FLAGSHIP RELEASE</div>
+          <h1 class="hero-title">Vanta Pulse X1 Spatial Headset</h1>
+          <p class="hero-desc">
+            Ultra-low latency lossless audio engineered with liquid-metal acoustic drivers and adaptive neural noise cancellation. Customize your materials in real-time 3D.
+          </p>
+
+          <div style="display:flex; align-items:baseline; gap:1rem; margin-bottom:1.5rem;">
+            <span style="font-size:2.2rem; font-weight:800; font-family:var(--font-heading);">$499.00</span>
+            <span style="color:var(--success); font-size:0.85rem; font-weight:700;">● In Stock (Ships Worldwide)</span>
+          </div>
+
+          <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+            <button class="add-cart-btn" style="padding:0.8rem 1.8rem; font-size:0.95rem;" onclick="addDirectToCart(1)">Add to Luxury Bag</button>
+            <button class="action-btn" onclick="toggleWishlist(1)">❤️ Save to Wishlist</button>
+          </div>
+        </div>
+
+        <!-- 3D Interactive Product Box -->
+        <div class="product-3d-box">
+          <div id="product-3d-canvas"></div>
+          
+          <div class="model-controls-overlay">
+            <div class="custom-finishes">
+              <span style="font-size:0.75rem; color:var(--muted); font-family:var(--font-mono); margin-right:4px;">FINISH:</span>
+              <div class="finish-dot active" style="background:#13151b;" onclick="setHeadsetFinish(0x13151b, 'Matte Obsidian', this)" title="Matte Obsidian"></div>
+              <div class="finish-dot" style="background:#cbd5e1;" onclick="setHeadsetFinish(0xd1d5db, 'Titanium Silver', this)" title="Titanium Silver"></div>
+              <div class="finish-dot" style="background:#d97706;" onclick="setHeadsetFinish(0xd97706, 'Solar Bronze', this)" title="Solar Bronze"></div>
+              <div class="finish-dot" style="background:#38bdf8;" onclick="setHeadsetFinish(0x38bdf8, 'Cyber Cyan', this)" title="Cyber Cyan"></div>
+            </div>
+
+            <div class="model-toggles">
+              <button class="tool-btn active" id="btn-spin" onclick="toggleSpin()">Auto Spin</button>
+              <button class="tool-btn" id="btn-wire" onclick="toggleWireframe()">Wireframe</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Catalog Filtering Bar -->
+    <section class="catalog-bar">
+      <div class="category-pills">
+        <button class="cat-pill active" onclick="setCategory('all', this)">All Hardware</button>
+        <button class="cat-pill" onclick="setCategory('Spatial Audio', this)">Spatial Audio</button>
+        <button class="cat-pill" onclick="setCategory('Cyber Wearables', this)">Cyber Wearables</button>
+        <button class="cat-pill" onclick="setCategory('Kinetic Gear', this)">Kinetic Gear</button>
+        <button class="cat-pill" onclick="setCategory('Computing', this)">Computing</button>
+      </div>
+
+      <div class="sort-wrap">
+        <span>Sort By:</span>
+        <select class="sort-select" onchange="handleSort(this.value)">
+          <option value="popular">Most Popular</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="rating">Highest Rated</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Products Grid -->
+    <section class="products-grid" id="products-catalog-grid">
+      <!-- Injected via JavaScript -->
+    </section>
+  </main>
+
+  <!-- CART DRAWER -->
+  <div class="drawer-overlay" id="cart-drawer" onclick="toggleDrawer('cart-drawer', false)">
+    <div class="vanta-drawer" onclick="event.stopPropagation()">
+      <div class="drawer-header">
+        <div class="drawer-title">🛒 Luxury Cart</div>
+        <button class="drawer-close" onclick="toggleDrawer('cart-drawer', false)">&times;</button>
+      </div>
+
+      <div class="drawer-body" id="cart-items-container">
+        <!-- Rendered items -->
+      </div>
+
+      <div class="drawer-footer">
+        <div class="promo-box">
+          <input type="text" id="promo-code" class="promo-input" placeholder="Promo code: VANTA20" />
+          <button class="promo-btn" onclick="applyPromo()">Apply</button>
+        </div>
+
+        <div class="price-summary-row">
+          <span>Subtotal:</span>
+          <span id="cart-subtotal">$0.00</span>
+        </div>
+        <div class="price-summary-row" id="discount-row" style="display:none; color:var(--success);">
+          <span>VIP Discount (20%):</span>
+          <span id="cart-discount">-$0.00</span>
+        </div>
+        <div class="price-summary-row">
+          <span>Insured Shipping:</span>
+          <span style="color:var(--success);">FREE</span>
+        </div>
+        <div class="price-summary-row total">
+          <span>Estimated Total:</span>
+          <span id="cart-total" style="color:var(--primary);">$0.00</span>
+        </div>
+
+        <button class="checkout-action-btn" onclick="openCheckoutModal()">Proceed to Checkout (Demo)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- WISHLIST DRAWER -->
+  <div class="drawer-overlay" id="wishlist-drawer" onclick="toggleDrawer('wishlist-drawer', false)">
+    <div class="vanta-drawer" onclick="event.stopPropagation()">
+      <div class="drawer-header">
+        <div class="drawer-title">❤️ Saved Wishlist</div>
+        <button class="drawer-close" onclick="toggleDrawer('wishlist-drawer', false)">&times;</button>
+      </div>
+
+      <div class="drawer-body" id="wishlist-items-container">
+        <!-- Rendered items -->
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCT DETAIL MODAL -->
+  <div class="vanta-modal" id="product-detail-modal" onclick="closeModal('product-detail-modal')">
+    <div class="modal-sheet" onclick="event.stopPropagation()" id="product-modal-content">
+      <!-- Dynamic detail content -->
+    </div>
+  </div>
+
+  <!-- CHECKOUT MODAL (Explicitly Demo Mode) -->
+  <div class="vanta-modal" id="checkout-modal" onclick="closeModal('checkout-modal')">
+    <div class="modal-sheet" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeModal('checkout-modal')">&times;</button>
+      <div style="margin-bottom:1.25rem;">
+        <span class="vanta-badge">DEMONSTRATION CHECKOUT</span>
+        <h2 style="font-family:var(--font-heading); font-size:1.6rem; margin-top:0.4rem;">Complete Your Order</h2>
+        <p style="color:var(--muted); font-size:0.85rem;">This is an interactive portfolio demo. No real payment is processed.</p>
+      </div>
+
+      <form id="checkout-form" onsubmit="handlePlaceOrder(event)">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+          <div>
+            <label style="font-size:0.8rem; color:var(--muted);">First Name</label>
+            <input type="text" id="chk-fname" class="search-input" placeholder="Alexander" required />
+          </div>
+          <div>
+            <label style="font-size:0.8rem; color:var(--muted);">Last Name</label>
+            <input type="text" id="chk-lname" class="search-input" placeholder="Wright" required />
+          </div>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <label style="font-size:0.8rem; color:var(--muted);">Delivery Address</label>
+          <input type="text" id="chk-address" class="search-input" placeholder="42 Wall Street, Penthouse 8B, New York" required />
+        </div>
+
+        <div style="margin-bottom:1.5rem;">
+          <label style="font-size:0.8rem; color:var(--muted);">Demo Payment Method</label>
+          <select id="chk-payment" class="sort-select" style="width:100%; padding:0.75rem;">
+            <option value="Demo Stripe Card">Stripe Simulated Card (No charge)</option>
+            <option value="Apple Pay Mock">Apple Pay / Google Pay Demo</option>
+            <option value="USDC Crypto Mock">Web3 USDC Simulated Wallet</option>
+          </select>
+        </div>
+
+        <div style="background:#0f1422; border:1px solid var(--border); padding:1.25rem; border-radius:10px; margin-bottom:1.5rem;">
+          <div style="display:flex; justify-content:space-between; font-weight:700; font-size:1.15rem;">
+            <span>Order Total:</span>
+            <span style="color:var(--primary);" id="checkout-summary-total">$0.00</span>
+          </div>
+        </div>
+
+        <button type="submit" class="checkout-action-btn">Confirm Order (Demo Mode)</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ORDER HISTORY MODAL -->
+  <div class="vanta-modal" id="orders-modal" onclick="closeModal('orders-modal')">
+    <div class="modal-sheet" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeModal('orders-modal')">&times;</button>
+      <h2 style="font-family:var(--font-heading); font-size:1.6rem; margin-bottom:0.4rem;">Order History (Demo Storage)</h2>
+      <p style="color:var(--muted); font-size:0.85rem; margin-bottom:1.5rem;">Orders saved to LocalStorage during your interactive session</p>
+
+      <div id="orders-list-container" style="display:flex; flex-direction:column; gap:1rem;">
+        <!-- Orders list -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="vanta-toast" id="vanta-toast">
+    <span id="toast-text">Item updated in your luxury bag!</span>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Vanta Creative Commerce. Engineered by Abhay Singh | Full Stack Developer.</p>
+    </div>
+  </footer>
+
+  <script>
+    // 8 Realistic Luxury Hardware Products
+    const vantaProducts = [
+      {
+        id: 1,
+        title: "Vanta Pulse X1 Headset",
+        category: "Spatial Audio",
+        price: 499,
+        rating: "4.9 ★ (284)",
+        specs: "Liquid-metal drivers &bull; 40hr Battery &bull; Dual-chip DSP &bull; 0.08ms latency",
+        img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=80",
+        badge: "Flagship"
+      },
+      {
+        id: 2,
+        title: "Chrono Horizon Smartwatch",
+        category: "Cyber Wearables",
+        price: 389,
+        rating: "4.8 ★ (192)",
+        specs: "Grade-5 Titanium &bull; Sapphire crystal &bull; EKG &amp; SpO2 &bull; 100m Waterproof",
+        img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80",
+        badge: "Bestseller"
+      },
+      {
+        id: 3,
+        title: "Apex Cyberdeck Terminal",
+        category: "Computing",
+        price: 649,
+        rating: "4.9 ★ (88)",
+        specs: "Hot-swappable switches &bull; Integrated OLED stats HUD &bull; CNC Brass plate",
+        img: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=700&q=80",
+        badge: "Limited Edition"
+      },
+      {
+        id: 4,
+        title: "Aura Ring S Bio-Tracker",
+        category: "Cyber Wearables",
+        price: 299,
+        rating: "4.7 ★ (140)",
+        specs: "Biometric pulse sensor &bull; Hypoallergenic ceramic &bull; 7-day battery",
+        img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=700&q=80",
+        badge: "Minimalist"
+      },
+      {
+        id: 5,
+        title: "Gravitas Zero-G Desk Lamp",
+        category: "Kinetic Gear",
+        price: 219,
+        rating: "4.8 ★ (62)",
+        specs: "Magnetic levitation light ring &bull; Qi wireless charging dock &bull; Stepless dimming",
+        img: "https://images.unsplash.com/photo-1534073828943-f801091bb18c?auto=format&fit=crop&w=700&q=80",
+        badge: "Kinetic"
+      },
+      {
+        id: 6,
+        title: "Spectra AR Neural Glasses",
+        category: "Spatial Audio",
+        price: 549,
+        rating: "4.6 ★ (74)",
+        specs: "Micro-OLED displays &bull; Bone conduction audio &bull; Ultra-light 48g frame",
+        img: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=700&q=80",
+        badge: "New Tech"
+      },
+      {
+        id: 7,
+        title: "Vanta Core Quantum SSD 4TB",
+        category: "Computing",
+        price: 349,
+        rating: "4.9 ★ (310)",
+        specs: "7,400 MB/s read speeds &bull; Hardware AES-256 &bull; Anodized heat-sink armor",
+        img: "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=700&q=80",
+        badge: "High-Speed"
+      },
+      {
+        id: 8,
+        title: "Kinetics Haptic Gamepad",
+        category: "Kinetic Gear",
+        price: 189,
+        rating: "4.8 ★ (112)",
+        specs: "Hall-effect electromagnetic triggers &bull; Dual haptic gyro &bull; 1000Hz polling",
+        img: "https://images.unsplash.com/photo-1600080972464-8e5f35f63d08?auto=format&fit=crop&w=700&q=80",
+        badge: "Pro Grade"
+      }
+    ];
+
+    let cart = JSON.parse(localStorage.getItem('vanta_cart') || '[]');
+    let wishlist = JSON.parse(localStorage.getItem('vanta_wishlist') || '[]');
+    let activeCategory = 'all';
+    let searchQuery = '';
+    let currentSort = 'popular';
+    let promoDiscount = 0;
+
+    // Three.js 3D Headset Model Variables
+    let scene3d, camera3d, renderer3d, headsetMeshGroup;
+    let autoSpin = true;
+    let isWireframe = false;
+
+    function init3DHeroModel() {
+      const container = document.getElementById('product-3d-canvas');
+      if (!container || typeof THREE === 'undefined') return;
+
+      const width = container.clientWidth || 450;
+      const height = container.clientHeight || 440;
+
+      scene3d = new THREE.Scene();
+      camera3d = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
+      camera3d.position.set(0, 0, 5.8);
+
+      renderer3d = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer3d.setSize(width, height);
+      renderer3d.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer3d.domElement);
+
+      // Lighting
+      const ambLight = new THREE.AmbientLight(0xffffff, 0.8);
+      scene3d.add(ambLight);
+
+      const pLight1 = new THREE.PointLight(0x38bdf8, 2, 10);
+      pLight1.position.set(4, 3, 4);
+      scene3d.add(pLight1);
+
+      const pLight2 = new THREE.PointLight(0x8b5cf6, 1.8, 10);
+      pLight2.position.set(-4, -2, 3);
+      scene3d.add(pLight2);
+
+      // Build 3D Luxury Headset Model Geometry
+      headsetMeshGroup = new THREE.Group();
+
+      const mainMat = new THREE.MeshStandardMaterial({
+        color: 0x13151b,
+        roughness: 0.25,
+        metalness: 0.85
+      });
+
+      // Headband Arc
+      const bandCurve = new THREE.EllipseCurve(0, 0, 1.6, 1.8, 0, Math.PI, false, 0);
+      const points = bandCurve.getPoints(50);
+      const points3D = points.map(p => new THREE.Vector3(p.x, p.y, 0));
+      const bandGeo = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points3D), 40, 0.1, 12, false);
+      const bandMesh = new THREE.Mesh(bandGeo, mainMat);
+      headsetMeshGroup.add(bandMesh);
+
+      // Left & Right Ear Cups (Cylinder with beveled look)
+      const cupGeo = new THREE.CylinderGeometry(0.68, 0.68, 0.45, 32);
+      const cupL = new THREE.Mesh(cupGeo, mainMat);
+      cupL.rotation.z = Math.PI / 2;
+      cupL.position.set(-1.6, 0, 0);
+      headsetMeshGroup.add(cupL);
+
+      const cupR = cupL.clone();
+      cupR.position.x = 1.6;
+      headsetMeshGroup.add(cupR);
+
+      // Ear Cushion Rings (Soft leather look)
+      const cushionMat = new THREE.MeshStandardMaterial({ color: 0x05070b, roughness: 0.8 });
+      const torusGeo = new THREE.TorusGeometry(0.55, 0.16, 16, 32);
+      const cushionL = new THREE.Mesh(torusGeo, cushionMat);
+      cushionL.rotation.y = Math.PI / 2;
+      cushionL.position.set(-1.42, 0, 0);
+      headsetMeshGroup.add(cushionL);
+
+      const cushionR = cushionL.clone();
+      cushionR.position.x = 1.42;
+      headsetMeshGroup.add(cushionR);
+
+      // Glowing Cyan Ring Inserts on Cups
+      const ringMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
+      const ringGeo = new THREE.RingGeometry(0.45, 0.49, 32);
+      const ringMeshL = new THREE.Mesh(ringGeo, ringMat);
+      ringMeshL.rotation.y = -Math.PI / 2;
+      ringMeshL.position.set(-1.83, 0, 0);
+      headsetMeshGroup.add(ringMeshL);
+
+      const ringMeshR = ringMeshL.clone();
+      ringMeshR.rotation.y = Math.PI / 2;
+      ringMeshR.position.set(1.83, 0, 0);
+      headsetMeshGroup.add(ringMeshR);
+
+      headsetMeshGroup.position.set(0, -0.4, 0);
+      headsetMeshGroup.rotation.y = 0.5;
+      scene3d.add(headsetMeshGroup);
+
+      // Mouse drag rotation on 3D box
+      let isDragging = false;
+      let prevMouseX = 0;
+      let prevMouseY = 0;
+
+      container.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        prevMouseX = e.clientX;
+        prevMouseY = e.clientY;
+      });
+
+      window.addEventListener('mouseup', () => isDragging = false);
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const deltaX = e.clientX - prevMouseX;
+        const deltaY = e.clientY - prevMouseY;
+        headsetMeshGroup.rotation.y += deltaX * 0.01;
+        headsetMeshGroup.rotation.x += deltaY * 0.01;
+        prevMouseX = e.clientX;
+        prevMouseY = e.clientY;
+      });
+
+      function animate3D() {
+        requestAnimationFrame(animate3D);
+        if (autoSpin && !isDragging) {
+          headsetMeshGroup.rotation.y += 0.008;
+        }
+        renderer3d.render(scene3d, camera3d);
+      }
+      animate3D();
+
+      window.addEventListener('resize', () => {
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        camera3d.aspect = w / h;
+        camera3d.updateProjectionMatrix();
+        renderer3d.setSize(w, h);
+      });
+    }
+
+    function setHeadsetFinish(hex, name, el) {
+      if (!headsetMeshGroup) return;
+      headsetMeshGroup.children.forEach(child => {
+        if (child.material && child.material.type === 'MeshStandardMaterial') {
+          child.material.color.setHex(hex);
+        }
+      });
+      document.querySelectorAll('.finish-dot').forEach(d => d.classList.remove('active'));
+      if (el) el.classList.add('active');
+      showToast(`Selected Finish: ${name}`);
+    }
+
+    function toggleSpin() {
+      autoSpin = !autoSpin;
+      document.getElementById('btn-spin').classList.toggle('active', autoSpin);
+    }
+
+    function toggleWireframe() {
+      isWireframe = !isWireframe;
+      document.getElementById('btn-wire').classList.toggle('active', isWireframe);
+      headsetMeshGroup.children.forEach(child => {
+        if (child.material) child.material.wireframe = isWireframe;
+      });
+    }
+
+    // --- Product Catalog Rendering ---
+    function renderCatalog() {
+      const grid = document.getElementById('products-catalog-grid');
+      grid.innerHTML = '';
+
+      let list = vantaProducts.filter(p => {
+        const matchCat = activeCategory === 'all' || p.category === activeCategory;
+        const matchQuery = p.title.toLowerCase().includes(searchQuery.toLowerCase()) || p.category.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchCat && matchQuery;
+      });
+
+      // Sorting
+      if (currentSort === 'price-low') list.sort((a,b) => a.price - b.price);
+      else if (currentSort === 'price-high') list.sort((a,b) => b.price - a.price);
+      else if (currentSort === 'rating') list.sort((a,b) => parseFloat(b.rating) - parseFloat(a.rating));
+
+      if (list.length === 0) {
+        grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem; color:var(--muted);">No hardware found matching "${searchQuery}".</div>`;
+        return;
+      }
+
+      list.forEach(p => {
+        const inWish = wishlist.some(w => w.id === p.id);
+        const card = document.createElement('article');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <div class="card-thumb-box" onclick="openProductDetail(${p.id})">
+            <img src="${p.img}" alt="${p.title}" class="card-img" loading="lazy" />
+            <button class="wish-toggle ${inWish ? 'active' : ''}" onclick="event.stopPropagation(); toggleWishlist(${p.id})">
+              ${inWish ? '❤️' : '🤍'}
+            </button>
+          </div>
+          <div class="card-body">
+            <span class="card-category">${p.category} &bull; ${p.badge}</span>
+            <h3 class="card-title" onclick="openProductDetail(${p.id})" style="cursor:pointer;">${p.title}</h3>
+            <div class="card-rating">${p.rating}</div>
+            <div class="card-bottom">
+              <span class="card-price">$${p.price}</span>
+              <button class="add-cart-btn" onclick="addDirectToCart(${p.id})">+ Add to Bag</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function setCategory(cat, btn) {
+      activeCategory = cat;
+      document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      renderCatalog();
+    }
+
+    function handleSearch(val) {
+      searchQuery = val;
+      renderCatalog();
+    }
+
+    function handleSort(val) {
+      currentSort = val;
+      renderCatalog();
+    }
+
+    // --- Cart & Wishlist Management ---
+    function addDirectToCart(id) {
+      const product = vantaProducts.find(p => p.id === id);
+      const existing = cart.find(c => c.id === id);
+
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ ...product, qty: 1 });
+      }
+
+      localStorage.setItem('vanta_cart', JSON.stringify(cart));
+      updateNavCounters();
+      renderCartItems();
+      showToast(`Added "${product.title}" to bag!`);
+    }
+
+    function toggleWishlist(id) {
+      const product = vantaProducts.find(p => p.id === id);
+      const idx = wishlist.findIndex(w => w.id === id);
+
+      if (idx > -1) {
+        wishlist.splice(idx, 1);
+        showToast(`Removed from Wishlist`);
+      } else {
+        wishlist.push(product);
+        showToast(`Saved "${product.title}" to Wishlist!`);
+      }
+
+      localStorage.setItem('vanta_wishlist', JSON.stringify(wishlist));
+      updateNavCounters();
+      renderCatalog();
+      renderWishlistItems();
+    }
+
+    function updateNavCounters() {
+      const cartCount = cart.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById('cart-count').textContent = cartCount;
+      document.getElementById('wish-count').textContent = wishlist.length;
+    }
+
+    function renderCartItems() {
+      const container = document.getElementById('cart-items-container');
+      if (cart.length === 0) {
+        container.innerHTML = `<div style="text-align:center; color:var(--muted); padding:3rem 0;">Your luxury bag is currently empty.</div>`;
+        updateCartTotals();
+        return;
+      }
+
+      container.innerHTML = '';
+      cart.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'drawer-item';
+        row.innerHTML = `
+          <img src="${item.img}" class="drawer-img" alt="${item.title}" />
+          <div class="drawer-info">
+            <h4 class="drawer-item-title">${item.title}</h4>
+            <div class="drawer-item-price">$${item.price} each</div>
+            <div class="qty-row">
+              <button class="qty-btn" onclick="updateItemQty(${item.id}, -1)">-</button>
+              <span style="font-size:0.85rem; font-weight:700; width:18px; text-align:center;">${item.qty}</span>
+              <button class="qty-btn" onclick="updateItemQty(${item.id}, 1)">+</button>
+              <button style="color:var(--danger); font-size:0.8rem; margin-left:auto;" onclick="removeCartItem(${item.id})">Remove</button>
+            </div>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+      updateCartTotals();
+    }
+
+    function updateItemQty(id, delta) {
+      const item = cart.find(c => c.id === id);
+      if (item) {
+        item.qty += delta;
+        if (item.qty <= 0) cart = cart.filter(c => c.id !== id);
+      }
+      localStorage.setItem('vanta_cart', JSON.stringify(cart));
+      updateNavCounters();
+      renderCartItems();
+    }
+
+    function removeCartItem(id) {
+      cart = cart.filter(c => c.id !== id);
+      localStorage.setItem('vanta_cart', JSON.stringify(cart));
+      updateNavCounters();
+      renderCartItems();
+    }
+
+    function updateCartTotals() {
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      const discount = subtotal * promoDiscount;
+      const total = subtotal - discount;
+
+      document.getElementById('cart-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+      document.getElementById('cart-total').textContent = `$${total.toFixed(2)}`;
+      
+      const discRow = document.getElementById('discount-row');
+      if (promoDiscount > 0) {
+        discRow.style.display = 'flex';
+        document.getElementById('cart-discount').textContent = `-$${discount.toFixed(2)}`;
+      } else {
+        discRow.style.display = 'none';
+      }
+    }
+
+    function applyPromo() {
+      const code = document.getElementById('promo-code').value.trim().toUpperCase();
+      if (code === 'VANTA20') {
+        promoDiscount = 0.20;
+        updateCartTotals();
+        showToast('🎉 Promo code VANTA20 applied: 20% OFF!');
+      } else {
+        alert('Invalid promo code. Try "VANTA20"');
+      }
+    }
+
+    function renderWishlistItems() {
+      const container = document.getElementById('wishlist-items-container');
+      if (wishlist.length === 0) {
+        container.innerHTML = `<div style="text-align:center; color:var(--muted); padding:3rem 0;">No saved items in your wishlist.</div>`;
+        return;
+      }
+
+      container.innerHTML = '';
+      wishlist.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'drawer-item';
+        row.innerHTML = `
+          <img src="${item.img}" class="drawer-img" alt="${item.title}" />
+          <div class="drawer-info">
+            <h4 class="drawer-item-title">${item.title}</h4>
+            <div class="drawer-item-price">$${item.price}</div>
+            <div style="display:flex; gap:0.5rem; margin-top:0.4rem;">
+              <button class="add-cart-btn" style="padding:0.25rem 0.6rem; font-size:0.75rem;" onclick="addDirectToCart(${item.id})">Move to Bag</button>
+              <button style="color:var(--danger); font-size:0.75rem;" onclick="toggleWishlist(${item.id})">Remove</button>
+            </div>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    // Product Detail Modal
+    function openProductDetail(id) {
+      const p = vantaProducts.find(item => item.id === id);
+      if (!p) return;
+
+      const container = document.getElementById('product-modal-content');
+      container.innerHTML = `
+        <button class="modal-close-btn" onclick="closeModal('product-detail-modal')">&times;</button>
+        <div style="display:grid; grid-template-columns:1fr 1.2fr; gap:2rem; align-items:center;">
+          <img src="${p.img}" alt="${p.title}" style="width:100%; border-radius:12px; object-fit:cover; max-height:340px;" />
+          <div>
+            <span class="vanta-badge">${p.badge}</span>
+            <h2 style="font-family:var(--font-heading); font-size:1.6rem; margin:0.3rem 0;">${p.title}</h2>
+            <div style="color:#fbbf24; font-size:0.85rem; margin-bottom:0.75rem;">${p.rating}</div>
+            <div style="font-size:1.8rem; font-weight:800; font-family:var(--font-heading); color:#fff; margin-bottom:1rem;">$${p.price}.00</div>
+            <p style="color:var(--text-secondary); font-size:0.88rem; line-height:1.6; margin-bottom:1.5rem;">${p.specs}</p>
+            <div style="display:flex; gap:0.75rem;">
+              <button class="add-cart-btn" style="flex:1; padding:0.75rem;" onclick="addDirectToCart(${p.id}); closeModal('product-detail-modal');">Add to Luxury Bag</button>
+              <button class="action-btn" onclick="toggleWishlist(${p.id}); closeModal('product-detail-modal');">❤️ Wishlist</button>
+            </div>
+          </div>
+        </div>
+      `;
+      openModal('product-detail-modal');
+    }
+
+    // Checkout Flow
+    function openCheckoutModal() {
+      if (cart.length === 0) {
+        alert('Your shopping bag is empty.');
+        return;
+      }
+      toggleDrawer('cart-drawer', false);
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      const total = subtotal - (subtotal * promoDiscount);
+      document.getElementById('checkout-summary-total').textContent = `$${total.toFixed(2)}`;
+      openModal('checkout-modal');
+    }
+
+    function handlePlaceOrder(e) {
+      e.preventDefault();
+      const fname = document.getElementById('chk-fname').value.trim();
+      const addr = document.getElementById('chk-address').value.trim();
+      const payment = document.getElementById('chk-payment').value;
+
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      const total = subtotal - (subtotal * promoDiscount);
+
+      const order = {
+        orderId: `VNT-${Math.floor(100000 + Math.random() * 900000)}`,
+        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+        items: [...cart],
+        total: `$${total.toFixed(2)}`,
+        customer: fname,
+        address: addr,
+        paymentMethod: payment
+      };
+
+      // Save to localStorage orders
+      const orders = JSON.parse(localStorage.getItem('vanta_orders') || '[]');
+      orders.unshift(order);
+      localStorage.setItem('vanta_orders', JSON.stringify(orders));
+
+      // Clear Cart
+      cart = [];
+      localStorage.setItem('vanta_cart', JSON.stringify(cart));
+      updateNavCounters();
+      renderCartItems();
+
+      closeModal('checkout-modal');
+      alert(`🎉 DEMO ORDER CONFIRMED!\n\nOrder ID: ${order.orderId}\nRecipient: ${order.customer}\nTotal: ${order.total}\nPayment: ${order.paymentMethod} (Simulated Demo)\n\nSaved to your Order History!`);
+      showToast(`Order ${order.orderId} placed successfully!`);
+    }
+
+    function renderOrderHistory() {
+      const container = document.getElementById('orders-list-container');
+      const orders = JSON.parse(localStorage.getItem('vanta_orders') || '[]');
+
+      if (orders.length === 0) {
+        container.innerHTML = `<div style="text-align:center; color:var(--muted); padding:2rem 0;">No demo orders placed yet. Add items and checkout to test!</div>`;
+        return;
+      }
+
+      container.innerHTML = '';
+      orders.forEach(o => {
+        const itemNames = o.items.map(i => `${i.title} (${i.qty}x)`).join(', ');
+        const card = document.createElement('div');
+        card.style.cssText = 'background:#111626; border:1px solid var(--border); padding:1.25rem; border-radius:10px; font-size:0.88rem;';
+        card.innerHTML = `
+          <div style="display:flex; justify-content:space-between; margin-bottom:0.4rem;">
+            <strong>Order #${o.orderId}</strong>
+            <span style="color:var(--primary); font-weight:800;">${o.total}</span>
+          </div>
+          <div style="color:var(--text-secondary); margin-bottom:0.4rem;">Items: ${itemNames}</div>
+          <div style="font-size:0.78rem; color:var(--muted);">Placed on: ${o.date} &bull; ${o.paymentMethod}</div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Modal & Drawer Helpers
+    function toggleDrawer(id, open) {
+      const drawer = document.getElementById(id);
+      if (open) {
+        if (id === 'cart-drawer') renderCartItems();
+        if (id === 'wishlist-drawer') renderWishlistItems();
+        drawer.classList.add('open');
+      } else {
+        drawer.classList.remove('open');
+      }
+    }
+
+    function openModal(id) {
+      if (id === 'orders-modal') renderOrderHistory();
+      document.getElementById(id).classList.add('open');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('vanta-toast');
+      document.getElementById('toast-text').textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      init3DHeroModel();
+      renderCatalog();
+      updateNavCounters();
+    });
+  </script>
+</body>
+</html>

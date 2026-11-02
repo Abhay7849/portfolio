@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Nexus — Advanced Project Management & Collaboration Platform. Modern SaaS dashboard with interactive Kanban, project tracking, calendar deadlines, and real-time team collaboration." />
+  <title>Nexus | Advanced Project Management &amp; Collaboration Platform</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-main: #060910;
+      --bg-sidebar: #090e18;
+      --bg-card: rgba(14, 20, 34, 0.75);
+      --bg-card-hover: rgba(20, 28, 48, 0.85);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-focus: #38bdf8;
+      --primary: #38bdf8;
+      --indigo: #6366f1;
+      --purple: #a855f7;
+      --accent-grad: linear-gradient(135deg, #38bdf8 0%, #6366f1 100%);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --success: #10b981;
+      --font-heading: 'Space Grotesk', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 18px;
+      --transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; font-family:var(--font-body); }
+    body { background: var(--bg-main); color: var(--text); overflow-x: hidden; min-height: 100vh; display: flex; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    /* Left SaaS Sidebar */
+    .nexus-sidebar {
+      width: 260px;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem 1.25rem;
+      z-index: 50;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+    .brand-logo {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: var(--accent-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .nexus-tag {
+      font-size: 0.65rem;
+      font-family: var(--font-mono);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      -webkit-text-fill-color: initial;
+    }
+
+    .back-portfolio {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.65rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 1.5rem;
+      transition: var(--transition);
+    }
+    .back-portfolio:hover { color: var(--primary); border-color: var(--primary); }
+
+    .nav-group-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+      padding-left: 0.5rem;
+    }
+
+    .side-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 2rem;
+    }
+    .side-tab {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: var(--transition);
+      text-align: left;
+    }
+    .side-tab:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+    .side-tab.active { background: rgba(56, 189, 248, 0.12); color: var(--primary); border: 1px solid rgba(56, 189, 248, 0.25); }
+
+    .project-filter-box {
+      margin-top: auto;
+      border-top: 1px solid var(--border);
+      padding-top: 1.25rem;
+    }
+    .active-project-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      padding: 0.85rem;
+      border-radius: 10px;
+      font-size: 0.82rem;
+    }
+    .active-project-title { font-weight: 700; color: var(--text); margin-bottom: 0.2rem; }
+    .active-project-desc { color: var(--text-muted); font-size: 0.75rem; }
+
+    /* Main SaaS Viewport */
+    .nexus-main {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Top Action Bar */
+    .top-action-bar {
+      height: 72px;
+      padding: 0 2rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(6, 9, 16, 0.75);
+      backdrop-filter: blur(16px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      gap: 1.5rem;
+    }
+
+    .search-filter-wrap {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex: 1;
+      max-width: 580px;
+    }
+    .task-search-input {
+      width: 100%;
+      background: rgba(14, 20, 34, 0.8);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.55rem 1rem 0.55rem 2.4rem;
+      color: var(--text);
+      font-size: 0.88rem;
+      outline: none;
+      transition: var(--transition);
+    }
+    .task-search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15); }
+    .search-pos-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 0.85rem; color: var(--text-muted); }
+
+    .filter-select {
+      background: rgba(14, 20, 34, 0.8);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.55rem 0.85rem;
+      color: var(--text);
+      font-size: 0.82rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .top-action-btns {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.15rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+    .btn-primary {
+      background: var(--accent-grad);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.25);
+    }
+    .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .btn-outline {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* Main Workspace Views Container */
+    .workspace-content {
+      padding: 2rem;
+      flex: 1;
+    }
+    .view-pane { display: none; }
+    .view-pane.active { display: block; animation: fadeIn 0.25s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* DASHBOARD VIEW */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .metric-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .metric-top { display: flex; justify-content: space-between; align-items: baseline; }
+    .metric-title { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); }
+    .metric-val { font-family: var(--font-heading); font-size: 2rem; font-weight: 800; color: #fff; margin: 0.5rem 0 0.25rem; }
+    .metric-sub { font-size: 0.78rem; color: var(--text-muted); }
+
+    .dash-analytics-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 1.75rem;
+      margin-bottom: 2rem;
+    }
+    .analytics-panel {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+    }
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.75rem;
+    }
+    .panel-heading { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; }
+
+    /* Velocity SVG Chart */
+    .velocity-chart-box {
+      height: 190px;
+      display: flex;
+      align-items: flex-end;
+      gap: 1.25rem;
+      padding-top: 1.5rem;
+    }
+    .chart-bar-group {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      height: 100%;
+      justify-content: flex-end;
+    }
+    .bar-pill {
+      width: 100%;
+      max-width: 48px;
+      background: rgba(56, 189, 248, 0.25);
+      border: 1px solid var(--primary);
+      border-radius: 6px 6px 0 0;
+      transition: height 0.5s ease;
+    }
+    .bar-pill.complete { background: var(--accent-grad); }
+    .bar-lbl { font-size: 0.72rem; font-family: var(--font-mono); color: var(--text-muted); }
+
+    /* Activity Stream */
+    .activity-stream {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .activity-row {
+      display: flex;
+      gap: 0.85rem;
+      font-size: 0.82rem;
+      border-left: 2px solid var(--border);
+      padding-left: 1rem;
+      position: relative;
+    }
+    .activity-row::before {
+      content: '';
+      position: absolute;
+      left: -5px;
+      top: 5px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+    .activity-time { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); }
+
+    /* KANBAN BOARD VIEW */
+    .kanban-board {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      min-height: calc(100vh - 170px);
+      align-items: start;
+    }
+    .kanban-column {
+      background: rgba(11, 16, 28, 0.7);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      min-height: 580px;
+    }
+    .column-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .column-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .col-count-pill {
+      background: rgba(255,255,255,0.06);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.1rem 0.5rem;
+      border-radius: 999px;
+      color: var(--text-muted);
+    }
+
+    .column-tasks-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      flex: 1;
+    }
+
+    /* Task Card */
+    .task-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+      cursor: grab;
+      transition: var(--transition);
+      position: relative;
+    }
+    .task-card:hover {
+      border-color: rgba(56, 189, 248, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+    .task-card.dragging {
+      opacity: 0.4;
+      cursor: grabbing;
+    }
+
+    .task-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    .priority-badge {
+      font-size: 0.68rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .p-critical { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .p-high { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .p-medium { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .p-low { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    .task-heading {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.35rem;
+      line-height: 1.35;
+    }
+    .task-description {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 0.85rem;
+    }
+
+    .task-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 0.65rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .assignee-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent-grad);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 800;
+    }
+    .task-actions-btn-group { display: flex; gap: 0.3rem; }
+    .btn-quick-move {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: rgba(255,255,255,0.04);
+    }
+    .btn-quick-move:hover { color: var(--primary); border-color: var(--primary); }
+
+    /* CALENDAR VIEW */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.75rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+    }
+    .cal-day-header {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--primary);
+      text-align: center;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .cal-cell {
+      min-height: 95px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 8px;
+      padding: 0.5rem;
+      font-size: 0.78rem;
+    }
+    .cal-cell-num { font-weight: 700; margin-bottom: 0.35rem; color: var(--text-muted); }
+    .cal-task-pill {
+      background: rgba(56, 189, 248, 0.15);
+      border-left: 2px solid var(--primary);
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.7rem;
+      margin-bottom: 0.25rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Modals (New Task & New Project) */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-sheet {
+      background: #090e18;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      max-width: 500px;
+      width: 100%;
+      padding: 2.25rem;
+      position: relative;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+    }
+    .modal-close { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; }
+
+    .form-group { margin-bottom: 1.15rem; display: flex; flex-direction: column; gap: 0.35rem; }
+    .form-group label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
+    .form-input {
+      background: rgba(14, 20, 34, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.65rem 0.95rem;
+      color: #fff;
+      font-size: 0.9rem;
+      outline: none;
+      transition: var(--transition);
+    }
+    .form-input:focus { border-color: var(--primary); }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      body { flex-direction: column; }
+      .nexus-sidebar { width: 100%; height: auto; position: static; }
+      .kanban-board { grid-template-columns: repeat(2, 1fr); }
+      .metrics-row { grid-template-columns: repeat(2, 1fr); }
+      .dash-analytics-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 680px) {
+      .kanban-board { grid-template-columns: 1fr; }
+      .metrics-row { grid-template-columns: 1fr; }
+      .calendar-grid { grid-template-columns: repeat(2, 1fr); }
+      .top-action-bar { height: auto; padding: 1rem; flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Left Collapsible Sidebar -->
+  <aside class="nexus-sidebar">
+    <div class="brand-wrap">
+      <div class="brand-logo">NEXUS <span class="nexus-tag">ENTERPRISE</span></div>
+    </div>
+
+    <a href="../../index.html#projects" class="back-portfolio">← Back to Portfolio</a>
+
+    <div class="nav-group-label">Core Views</div>
+    <nav class="side-nav">
+      <button class="side-tab active" onclick="switchView('dashboard', this)">
+        <span>📊</span> Dashboard Overview
+      </button>
+      <button class="side-tab" onclick="switchView('kanban', this)">
+        <span>📋</span> Kanban Sprint Board
+      </button>
+      <button class="side-tab" onclick="switchView('calendar', this)">
+        <span>📅</span> Calendar &amp; Deadlines
+      </button>
+      <button class="side-tab" onclick="switchView('team', this)">
+        <span>👥</span> Team Members (4)
+      </button>
+    </nav>
+
+    <div class="nav-group-label">Active Project</div>
+    <div class="project-filter-box">
+      <div class="active-project-card">
+        <div class="active-project-title" id="side-project-title">Nexus Cloud Core Engine</div>
+        <div class="active-project-desc" id="side-project-desc">Sprint 14 &bull; Release Candidate v2.4</div>
+      </div>
+      <button class="btn btn-outline" style="width:100%; margin-top:0.75rem; font-size:0.75rem; padding:0.4rem;" onclick="resetDemoData()">Reset Demo Storage</button>
+    </div>
+  </aside>
+
+  <!-- Main View Area -->
+  <main class="nexus-main">
+    <!-- Top Action Bar -->
+    <header class="top-action-bar">
+      <div class="search-filter-wrap">
+        <div style="position:relative; width:100%;">
+          <span class="search-pos-icon">🔍</span>
+          <input type="text" id="task-search" class="task-search-input" placeholder="Search tasks, epics, bug tickets..." oninput="handleSearch(this.value)" />
+        </div>
+
+        <select class="filter-select" id="priority-filter" onchange="handleFilterPriority(this.value)">
+          <option value="all">All Priorities</option>
+          <option value="Critical">Critical</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+      </div>
+
+      <div class="top-action-btns">
+        <button class="btn btn-primary" onclick="openNewTaskModal()">+ Create Task</button>
+      </div>
+    </header>
+
+    <!-- Workspace Panes -->
+    <div class="workspace-content">
+      <!-- 1. DASHBOARD VIEW PANE -->
+      <section class="view-pane active" id="view-dashboard">
+        <div class="metrics-row">
+          <div class="metric-card">
+            <span class="metric-title">Sprint Velocity</span>
+            <div class="metric-val" id="dash-velocity">75%</div>
+            <span class="metric-sub">Completion target on track</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-title">Active Sprint Tasks</span>
+            <div class="metric-val" id="dash-total-tasks">8</div>
+            <span class="metric-sub">Across 4 workflow stages</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-title">Code Reviews Pending</span>
+            <div class="metric-val" style="color:var(--warning);" id="dash-review-count">2</div>
+            <span class="metric-sub">Awaiting peer validation</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-title">Critical Blockers</span>
+            <div class="metric-val" style="color:var(--danger);" id="dash-critical-count">1</div>
+            <span class="metric-sub">Immediate focus items</span>
+          </div>
+        </div>
+
+        <div class="dash-analytics-grid">
+          <!-- Velocity Chart -->
+          <div class="analytics-panel">
+            <div class="panel-header">
+              <span class="panel-heading">Sprint Task Completion Burndown</span>
+              <span style="font-size:0.75rem; font-family:var(--font-mono); color:var(--primary);">LIVE VELOCITY</span>
+            </div>
+            <div class="velocity-chart-box">
+              <div class="chart-bar-group">
+                <div class="bar-pill complete" style="height: 85%;"></div>
+                <span class="bar-lbl">Mon</span>
+              </div>
+              <div class="chart-bar-group">
+                <div class="bar-pill complete" style="height: 60%;"></div>
+                <span class="bar-lbl">Tue</span>
+              </div>
+              <div class="chart-bar-group">
+                <div class="bar-pill complete" style="height: 90%;"></div>
+                <span class="bar-lbl">Wed</span>
+              </div>
+              <div class="chart-bar-group">
+                <div class="bar-pill complete" style="height: 75%;"></div>
+                <span class="bar-lbl">Thu</span>
+              </div>
+              <div class="chart-bar-group">
+                <div class="bar-pill" style="height: 50%;"></div>
+                <span class="bar-lbl">Fri</span>
+              </div>
+              <div class="chart-bar-group">
+                <div class="bar-pill" style="height: 40%;"></div>
+                <span class="bar-lbl">Sat</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Activity Stream -->
+          <div class="analytics-panel">
+            <div class="panel-header">
+              <span class="panel-heading">Real-Time Activity Audit</span>
+              <span style="font-size:0.75rem; font-family:var(--font-mono); color:var(--text-muted);">EVENT LOG</span>
+            </div>
+            <div class="activity-stream" id="activity-log-stream">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. KANBAN BOARD VIEW PANE -->
+      <section class="view-pane" id="view-kanban">
+        <div class="kanban-board">
+          <!-- Column 1: Backlog -->
+          <div class="kanban-column" ondragover="allowDrop(event)" ondrop="handleDrop(event, 'backlog')">
+            <div class="column-head">
+              <div class="column-title"><span>📥</span> Backlog</div>
+              <span class="col-count-pill" id="badge-backlog">0</span>
+            </div>
+            <div class="column-tasks-container" id="col-backlog"></div>
+          </div>
+
+          <!-- Column 2: In Progress -->
+          <div class="kanban-column" ondragover="allowDrop(event)" ondrop="handleDrop(event, 'progress')">
+            <div class="column-head">
+              <div class="column-title"><span>⚡</span> In Progress</div>
+              <span class="col-count-pill" id="badge-progress">0</span>
+            </div>
+            <div class="column-tasks-container" id="col-progress"></div>
+          </div>
+
+          <!-- Column 3: Code Review -->
+          <div class="kanban-column" ondragover="allowDrop(event)" ondrop="handleDrop(event, 'review')">
+            <div class="column-head">
+              <div class="column-title"><span>👁️</span> Code Review</div>
+              <span class="col-count-pill" id="badge-review">0</span>
+            </div>
+            <div class="column-tasks-container" id="col-review"></div>
+          </div>
+
+          <!-- Column 4: Completed -->
+          <div class="kanban-column" ondragover="allowDrop(event)" ondrop="handleDrop(event, 'done')">
+            <div class="column-head">
+              <div class="column-title"><span>✅</span> Done &amp; Deployed</div>
+              <span class="col-count-pill" id="badge-done">0</span>
+            </div>
+            <div class="column-tasks-container" id="col-done"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. CALENDAR VIEW PANE -->
+      <section class="view-pane" id="view-calendar">
+        <div style="margin-bottom:1.25rem; display:flex; justify-content:space-between; align-items:center;">
+          <h2 style="font-family:var(--font-heading); font-size:1.4rem;">November 2026 Deadlines Schedule</h2>
+          <span style="font-size:0.8rem; color:var(--text-muted); font-family:var(--font-mono);">SYNCED WITH KANBAN MILESTONES</span>
+        </div>
+        <div class="calendar-grid" id="calendar-days-container">
+          <!-- Calendar Days rendered via JS -->
+        </div>
+      </section>
+
+      <!-- 4. TEAM MEMBERS VIEW PANE -->
+      <section class="view-pane" id="view-team">
+        <h2 style="font-family:var(--font-heading); font-size:1.4rem; margin-bottom:1.5rem;">Assigned Engineering Squad</h2>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:1.5rem;">
+          <div class="metric-card">
+            <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem;">
+              <div class="assignee-avatar" style="width:38px; height:38px; font-size:0.9rem;">AS</div>
+              <div>
+                <strong>Abhay Singh</strong>
+                <div style="font-size:0.75rem; color:var(--primary);">Lead Full Stack Engineer</div>
+              </div>
+            </div>
+            <p style="font-size:0.82rem; color:var(--text-muted);">MERN stack core architecture, database indexing, and API microservices.</p>
+          </div>
+
+          <div class="metric-card">
+            <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem;">
+              <div class="assignee-avatar" style="width:38px; height:38px; font-size:0.9rem; background:#10b981;">ML</div>
+              <div>
+                <strong>Maya Lin</strong>
+                <div style="font-size:0.75rem; color:#10b981;">Senior Backend Architect</div>
+              </div>
+            </div>
+            <p style="font-size:0.82rem; color:var(--text-muted);">Distributed caching, token encryption, and database sharding.</p>
+          </div>
+
+          <div class="metric-card">
+            <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem;">
+              <div class="assignee-avatar" style="width:38px; height:38px; font-size:0.9rem; background:#f59e0b;">DK</div>
+              <div>
+                <strong>David Kim</strong>
+                <div style="font-size:0.75rem; color:#f59e0b;">Frontend UI/UX Specialist</div>
+              </div>
+            </div>
+            <p style="font-size:0.82rem; color:var(--text-muted);">Three.js WebGL rendering, accessible design systems, and animations.</p>
+          </div>
+
+          <div class="metric-card">
+            <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem;">
+              <div class="assignee-avatar" style="width:38px; height:38px; font-size:0.9rem; background:#a855f7;">SJ</div>
+              <div>
+                <strong>Sarah Jenkins</strong>
+                <div style="font-size:0.75rem; color:#a855f7;">DevOps &amp; Security Lead</div>
+              </div>
+            </div>
+            <p style="font-size:0.82rem; color:var(--text-muted);">CI/CD pipelines, Kubernetes container orchestration, and penetration testing.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- CREATE TASK MODAL -->
+  <div class="modal-overlay" id="task-modal" onclick="closeModal('task-modal')">
+    <div class="modal-sheet" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('task-modal')">&times;</button>
+      <h3 style="font-family:var(--font-heading); font-size:1.35rem; margin-bottom:0.4rem;">+ Create Engineering Task</h3>
+      <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:1.5rem;">Add a task to the active sprint. Stored in persistent LocalStorage.</p>
+
+      <form id="create-task-form" onsubmit="handleCreateTask(event)">
+        <div class="form-group">
+          <label>Task Title</label>
+          <input type="text" id="t-title" class="form-input" placeholder="e.g. Implement Webhook Signature Verification" required />
+        </div>
+
+        <div class="form-group">
+          <label>Technical Details / Scope</label>
+          <textarea id="t-desc" rows="3" class="form-input" placeholder="Outline technical specs and criteria..." required></textarea>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div class="form-group">
+            <label>Priority</label>
+            <select id="t-priority" class="form-input">
+              <option value="Critical">Critical</option>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Assignee</label>
+            <select id="t-assignee" class="form-input">
+              <option value="Abhay S.">Abhay Singh</option>
+              <option value="Maya L.">Maya Lin</option>
+              <option value="David K.">David Kim</option>
+              <option value="Sarah J.">Sarah Jenkins</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div class="form-group">
+            <label>Due Date</label>
+            <input type="date" id="t-due" class="form-input" required />
+          </div>
+
+          <div class="form-group">
+            <label>Workflow Stage</label>
+            <select id="t-stage" class="form-input">
+              <option value="backlog">Backlog</option>
+              <option value="progress">In Progress</option>
+              <option value="review">Code Review</option>
+              <option value="done">Done</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; margin-top:0.75rem;">Commit to Kanban Board</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Initial Realistic Sample Data
+    const defaultTasks = [
+      {
+        id: 1,
+        title: "Database Indexing & Query Sharding",
+        desc: "Add compound indexes on tripId and expenseDate in MongoDB to optimize balance calculation queries under 40ms.",
+        priority: "Critical",
+        assignee: "Abhay S.",
+        due: "2026-11-05",
+        status: "progress"
+      },
+      {
+        id: 2,
+        title: "Stateless JWT Auth Refresh Tokens",
+        desc: "Implement sliding-window token rotation with encrypted Redis blacklisting for compromised sessions.",
+        priority: "High",
+        assignee: "Maya L.",
+        due: "2026-11-08",
+        status: "review"
+      },
+      {
+        id: 3,
+        title: "Three.js WebGL PBR Room Shader",
+        desc: "Refactor standard materials to PBR MeshPhysicalMaterial with roughness maps and soft shadow biasing.",
+        priority: "High",
+        assignee: "David K.",
+        due: "2026-11-09",
+        status: "progress"
+      },
+      {
+        id: 4,
+        title: "Kubernetes Auto-Scaler CI/CD Pipeline",
+        desc: "Configure horizontal pod autoscaler (HPA) triggers based on 70% CPU memory pressure benchmarks.",
+        priority: "Medium",
+        assignee: "Sarah J.",
+        due: "2026-11-12",
+        status: "backlog"
+      },
+      {
+        id: 5,
+        title: "Greedy Cash-Flow Minimizer Algorithm",
+        desc: "Formulate N-node debt resolution matrix reducing circular financial transactions into minimal direct settlements.",
+        priority: "Critical",
+        assignee: "Abhay S.",
+        due: "2026-11-02",
+        status: "done"
+      },
+      {
+        id: 6,
+        title: "E-Commerce Shopping Bag State Engine",
+        desc: "Build reactive cart drawer with quantity updates, promo code calculations, and LocalStorage persistence.",
+        priority: "Medium",
+        assignee: "David K.",
+        due: "2026-11-03",
+        status: "done"
+      },
+      {
+        id: 7,
+        title: "Stripe Webhook Signature Verification",
+        desc: "Integrate raw body buffering and HMAC-SHA256 signature checks on incoming payment confirmation events.",
+        priority: "High",
+        assignee: "Maya L.",
+        due: "2026-11-14",
+        status: "review"
+      },
+      {
+        id: 8,
+        title: "Accessibility ARIA Audit & Keyboard Nav",
+        desc: "Run Lighthouse accessibility scanner to guarantee WCAG 2.1 AA keyboard focus trap compliance on all modals.",
+        priority: "Low",
+        assignee: "Abhay S.",
+        due: "2026-11-16",
+        status: "backlog"
+      }
+    ];
+
+    let tasks = JSON.parse(localStorage.getItem('nexus_tasks_v2') || JSON.stringify(defaultTasks));
+    let activities = JSON.parse(localStorage.getItem('nexus_activities_v2') || JSON.stringify([
+      { time: "10 mins ago", text: "Abhay Singh moved 'Greedy Cash-Flow Minimizer' to Done" },
+      { time: "45 mins ago", text: "Maya Lin submitted 'Stripe Webhook Verification' for Code Review" },
+      { time: "2 hours ago", text: "David Kim created task 'Three.js WebGL Room Shader'" },
+      { time: "Yesterday", text: "Sarah Jenkins completed 'Kubernetes Cluster Provisioning'" }
+    ]));
+
+    let currentFilterPriority = 'all';
+    let searchQuery = '';
+    let draggedTaskId = null;
+
+    // View Switching
+    function switchView(viewName, btn) {
+      document.querySelectorAll('.view-pane').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.side-tab').forEach(t => t.classList.remove('active'));
+
+      const target = document.getElementById(`view-${viewName}`);
+      if (target) target.classList.add('active');
+      if (btn) btn.classList.add('active');
+
+      if (viewName === 'kanban') renderKanban();
+      if (viewName === 'calendar') renderCalendar();
+      if (viewName === 'dashboard') updateDashboardMetrics();
+    }
+
+    // Kanban Rendering
+    function renderKanban() {
+      const colBacklog = document.getElementById('col-backlog');
+      const colProgress = document.getElementById('col-progress');
+      const colReview = document.getElementById('col-review');
+      const colDone = document.getElementById('col-done');
+
+      colBacklog.innerHTML = '';
+      colProgress.innerHTML = '';
+      colReview.innerHTML = '';
+      colDone.innerHTML = '';
+
+      let counts = { backlog: 0, progress: 0, review: 0, done: 0 };
+
+      const filtered = tasks.filter(t => {
+        const matchPri = currentFilterPriority === 'all' || t.priority === currentFilterPriority;
+        const matchSearch = t.title.toLowerCase().includes(searchQuery.toLowerCase()) || t.desc.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchPri && matchSearch;
+      });
+
+      filtered.forEach(t => {
+        counts[t.status] = (counts[t.status] || 0) + 1;
+
+        const pClass = t.priority === 'Critical' ? 'p-critical' : t.priority === 'High' ? 'p-high' : t.priority === 'Medium' ? 'p-medium' : 'p-low';
+        const card = document.createElement('div');
+        card.className = 'task-card';
+        card.draggable = true;
+        card.id = `task-${t.id}`;
+        card.ondragstart = (e) => handleDragStart(e, t.id);
+        card.ondragend = (e) => handleDragEnd(e);
+
+        // Quick Stage Advance Button
+        let moveBtn = '';
+        if (t.status === 'backlog') moveBtn = `<button class="btn-quick-move" onclick="quickMove(${t.id}, 'progress')">Start →</button>`;
+        else if (t.status === 'progress') moveBtn = `<button class="btn-quick-move" onclick="quickMove(${t.id}, 'review')">Review →</button>`;
+        else if (t.status === 'review') moveBtn = `<button class="btn-quick-move" onclick="quickMove(${t.id}, 'done')">Done ✓</button>`;
+        else if (t.status === 'done') moveBtn = `<button class="btn-quick-move" onclick="quickMove(${t.id}, 'progress')">Reopen ↩</button>`;
+
+        card.innerHTML = `
+          <div class="task-card-top">
+            <span class="priority-badge ${pClass}">${t.priority}</span>
+            <button style="color:var(--danger); font-size:0.8rem;" onclick="deleteTask(${t.id})" title="Delete Task">&times;</button>
+          </div>
+          <h4 class="task-heading">${t.title}</h4>
+          <p class="task-description">${t.desc}</p>
+          <div class="task-meta">
+            <div style="display:flex; align-items:center; gap:0.4rem;">
+              <div class="assignee-avatar">${t.assignee.substring(0,2).toUpperCase()}</div>
+              <span>${t.due}</span>
+            </div>
+            <div class="task-actions-btn-group">
+              ${moveBtn}
+            </div>
+          </div>
+        `;
+
+        if (t.status === 'backlog') colBacklog.appendChild(card);
+        else if (t.status === 'progress') colProgress.appendChild(card);
+        else if (t.status === 'review') colReview.appendChild(card);
+        else if (t.status === 'done') colDone.appendChild(card);
+      });
+
+      // Update Column Badges
+      document.getElementById('badge-backlog').textContent = counts.backlog || 0;
+      document.getElementById('badge-progress').textContent = counts.progress || 0;
+      document.getElementById('badge-review').textContent = counts.review || 0;
+      document.getElementById('badge-done').textContent = counts.done || 0;
+
+      updateDashboardMetrics();
+    }
+
+    // HTML5 Drag & Drop
+    function handleDragStart(e, id) {
+      draggedTaskId = id;
+      e.target.classList.add('dragging');
+      e.dataTransfer.setData('text/plain', id);
+    }
+
+    function handleDragEnd(e) {
+      e.target.classList.remove('dragging');
+    }
+
+    function allowDrop(e) {
+      e.preventDefault();
+    }
+
+    function handleDrop(e, newStatus) {
+      e.preventDefault();
+      if (!draggedTaskId) return;
+
+      const t = tasks.find(item => item.id === draggedTaskId);
+      if (t && t.status !== newStatus) {
+        const oldStatus = t.status;
+        t.status = newStatus;
+        saveTasks();
+        logActivity(`Moved "${t.title}" from ${oldStatus.toUpperCase()} to ${newStatus.toUpperCase()}`);
+        renderKanban();
+      }
+      draggedTaskId = null;
+    }
+
+    function quickMove(id, newStatus) {
+      const t = tasks.find(item => item.id === id);
+      if (t) {
+        t.status = newStatus;
+        saveTasks();
+        logActivity(`Transitioned "${t.title}" to ${newStatus.toUpperCase()}`);
+        renderKanban();
+      }
+    }
+
+    function deleteTask(id) {
+      const t = tasks.find(item => item.id === id);
+      if (confirm(`Delete task "${t.title}"?`)) {
+        tasks = tasks.filter(item => item.id !== id);
+        saveTasks();
+        logActivity(`Deleted task "${t.title}"`);
+        renderKanban();
+      }
+    }
+
+    // Search & Filter Handlers
+    function handleSearch(val) {
+      searchQuery = val;
+      renderKanban();
+    }
+
+    function handleFilterPriority(val) {
+      currentFilterPriority = val;
+      renderKanban();
+    }
+
+    // Dashboard Metrics
+    function updateDashboardMetrics() {
+      const total = tasks.length;
+      const done = tasks.filter(t => t.status === 'done').length;
+      const review = tasks.filter(t => t.status === 'review').length;
+      const critical = tasks.filter(t => t.priority === 'Critical' && t.status !== 'done').length;
+
+      const velocityPct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+      document.getElementById('dash-velocity').textContent = `${velocityPct}%`;
+      document.getElementById('dash-total-tasks').textContent = total;
+      document.getElementById('dash-review-count').textContent = review;
+      document.getElementById('dash-critical-count').textContent = critical;
+
+      // Render activity log
+      const stream = document.getElementById('activity-log-stream');
+      stream.innerHTML = '';
+      activities.slice(0, 5).forEach(a => {
+        const row = document.createElement('div');
+        row.className = 'activity-row';
+        row.innerHTML = `
+          <div>
+            <div>${a.text}</div>
+            <span class="activity-time">${a.time}</span>
+          </div>
+        `;
+        stream.appendChild(row);
+      });
+    }
+
+    function logActivity(text) {
+      activities.unshift({ time: "Just now", text });
+      localStorage.setItem('nexus_activities_v2', JSON.stringify(activities));
+    }
+
+    // Calendar View Generation
+    function renderCalendar() {
+      const container = document.getElementById('calendar-days-container');
+      container.innerHTML = '';
+
+      const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      daysOfWeek.forEach(d => {
+        const head = document.createElement('div');
+        head.className = 'cal-day-header';
+        head.textContent = d;
+        container.appendChild(head);
+      });
+
+      // 28 days for preview grid (November 2026)
+      for (let day = 1; day <= 28; day++) {
+        const cell = document.createElement('div');
+        cell.className = 'cal-cell';
+        const dayStr = day < 10 ? `0${day}` : `${day}`;
+        const matchDate = `2026-11-${dayStr}`;
+
+        const dayTasks = tasks.filter(t => t.due === matchDate);
+        let taskPills = '';
+        dayTasks.forEach(dt => {
+          taskPills += `<div class="cal-task-pill" title="${dt.title}">${dt.title}</div>`;
+        });
+
+        cell.innerHTML = `
+          <div class="cal-cell-num">${day}</div>
+          ${taskPills}
+        `;
+        container.appendChild(cell);
+      }
+    }
+
+    // Task Creation
+    function openNewTaskModal() {
+      // Default to next week date
+      const today = new Date();
+      today.setDate(today.getDate() + 5);
+      document.getElementById('t-due').value = today.toISOString().split('T')[0];
+      document.getElementById('task-modal').classList.add('open');
+    }
+
+    function handleCreateTask(e) {
+      e.preventDefault();
+      const title = document.getElementById('t-title').value.trim();
+      const desc = document.getElementById('t-desc').value.trim();
+      const priority = document.getElementById('t-priority').value;
+      const assignee = document.getElementById('t-assignee').value;
+      const due = document.getElementById('t-due').value;
+      const stage = document.getElementById('t-stage').value;
+
+      if (!title || !desc) return;
+
+      const newTask = {
+        id: Date.now(),
+        title,
+        desc,
+        priority,
+        assignee,
+        due,
+        status: stage
+      };
+
+      tasks.unshift(newTask);
+      saveTasks();
+      logActivity(`Created task "${title}" assigned to ${assignee}`);
+
+      closeModal('task-modal');
+      document.getElementById('create-task-form').reset();
+      renderKanban();
+    }
+
+    function saveTasks() {
+      localStorage.setItem('nexus_tasks_v2', JSON.stringify(tasks));
+    }
+
+    function resetDemoData() {
+      if (confirm('Reset Nexus data back to original demo state?')) {
+        localStorage.removeItem('nexus_tasks_v2');
+        localStorage.removeItem('nexus_activities_v2');
+        tasks = JSON.parse(JSON.stringify(defaultTasks));
+        activities = [
+          { time: "Just now", text: "Reset demo data to default sprint state" }
+        ];
+        saveTasks();
+        renderKanban();
+        alert('Reset complete!');
+      }
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      renderKanban();
+      updateDashboardMetrics();
+    });
+  </script>
+</body>
+</html>

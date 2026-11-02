@@ -863,6 +863,21 @@ ul {
   background: radial-gradient(circle at center, #581c87 0%, #2e1065 100%);
 }
 
+.project-bg-novaspace {
+  background: radial-gradient(circle at 60% 40%, rgba(217, 119, 6, 0.35) 0%, rgba(30, 20, 15, 0.95) 60%, #0a0806 100%);
+  border-right: 1px solid rgba(217, 119, 6, 0.2);
+}
+
+.project-bg-vanta {
+  background: radial-gradient(circle at 40% 50%, rgba(0, 245, 255, 0.22) 0%, rgba(139, 92, 246, 0.18) 50%, #06090e 100%);
+  border-left: 1px solid rgba(0, 245, 255, 0.2);
+}
+
+.project-bg-nexus {
+  background: radial-gradient(circle at 50% 45%, rgba(99, 102, 241, 0.28) 0%, rgba(30, 27, 75, 0.85) 65%, #080c16 100%);
+  border-right: 1px solid rgba(99, 102, 241, 0.2);
+}
+
 .visual-inner {
   text-align: center;
   width: 100%;
