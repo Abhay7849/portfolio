@@ -654,7 +654,15 @@
             window.URL.revokeObjectURL(url);
           }, 100);
 
-          statusMessage.textContent = 'Status: ✅ Video downloaded! Ready to upload to YouTube.';
+          // Also save directly to server disk if running locally
+          fetch('/save-video', {
+            method: 'POST',
+            body: blob
+          }).then(r => r.json()).then(data => {
+            console.log('Saved to PC disk:', data);
+          }).catch(e => console.log('Server save fallback:', e));
+
+          statusMessage.textContent = 'Status: ✅ Video downloaded to PC! Ready to upload to YouTube.';
           recordBtn.disabled = false;
           playBtn.disabled = false;
           isRecording = false;
@@ -678,6 +686,17 @@
     // Initial frame draw on load
     userImg.onload = () => render(0);
     setTimeout(() => render(0), 300);
+
+    // Auto-record if query parameter present
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('autorecord') === 'true') {
+        statusMessage.textContent = 'Status: Auto-recording starting in 1s...';
+        setTimeout(() => {
+          startRecord();
+        }, 1200);
+      }
+    });
   </script>
 </body>
 </html>

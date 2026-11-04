@@ -15,12 +15,52 @@ const MIME = {
   '.jpeg': 'image/jpeg',
   '.svg': 'image/svg+xml',
   '.ico': 'image/x-icon',
+  '.webm': 'video/webm',
+  '.mp4': 'video/mp4',
   '.woff2': 'font/woff2',
   '.woff': 'font/woff'
 };
 
 const server = http.createServer((req, res) => {
   let reqPath = decodeURI(req.url.split('?')[0]);
+
+  if (req.method === 'OPTIONS') {
+    res.writeHead(204, {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': '*'
+    });
+    return res.end();
+  }
+
+  // Handle direct video upload from client
+  if (req.method === 'POST' && reqPath === '/save-video') {
+    const chunks = [];
+    req.on('data', chunk => chunks.push(chunk));
+    req.on('end', () => {
+      const buffer = Buffer.concat(chunks);
+      const destPath1 = path.join(ROOT, 'abhay-singh-upwork-intro.webm');
+      const downloadsDir = path.join(process.env.USERPROFILE || 'C:\\Users\\ASUS', 'Downloads');
+      const destPath2 = path.join(downloadsDir, 'abhay-singh-upwork-intro.webm');
+
+      try {
+        fs.writeFileSync(destPath1, buffer);
+        try { fs.writeFileSync(destPath2, buffer); } catch (_) {}
+        console.log(`Video saved to: ${destPath1} and ${destPath2} (${buffer.length} bytes)`);
+        res.writeHead(200, {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        });
+        res.end(JSON.stringify({ success: true, size: buffer.length, path: destPath2 }));
+      } catch (err) {
+        console.error('Error saving video:', err);
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: err.message }));
+      }
+    });
+    return;
+  }
+
   if (reqPath === '/') reqPath = '/index.html';
   
   let filePath = path.join(ROOT, reqPath);
